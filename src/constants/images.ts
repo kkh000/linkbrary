@@ -6,6 +6,8 @@ export const LOGO = {
   INSTAGRAM_LOGO: '/icons/instagram.svg',
   GOOGLE_LOGIN: '/icons/google_login.png',
   KAKAO_LOGIN: '/icons/kakao_login.png',
+  EYE_OPEN: '/icons/eye_open.svg',
+  EYE_CLOSE: '/icons/eye_close.svg',
 };
 
 export const IMAGE = {

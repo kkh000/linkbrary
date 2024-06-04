@@ -9,10 +9,10 @@ const Navigation = () => {
   return (
     <nav className='sticky flex justify-between items-center px-[12.5rem] py-5'>
       <Link href='./'>
-        <Image src={LOGO.LINKBRARY_LOGO} alt='linkbrary' width={133} height={24} />
+        <Image src={LOGO.LINKBRARY_LOGO} alt='linkbrary' width={133} height={24} priority />
       </Link>
       <Link href='./signin'>
-        <Button>로그인</Button>
+        <Button type='button'>로그인</Button>
       </Link>
     </nav>
   );
