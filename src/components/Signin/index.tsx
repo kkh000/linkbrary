@@ -1,3 +1,6 @@
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
 import { FieldError, useForm } from 'react-hook-form';
 
 import Button from '../common/Button';
@@ -8,15 +11,51 @@ import SocialLogin from '../common/Form/SocialLogin';
 
 import { InputItem } from '@/types/inputType';
 import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
+import { userSignin } from '@/utils/apis/auth/userSignin';
+import { regexr } from '@/utils/regrex';
 
 const SigninPage = () => {
   const {
     register,
     formState: { errors },
     clearErrors,
+    handleSubmit,
+    setFocus,
+    setError,
   } = useForm<InputItem>({ mode: 'onBlur', reValidateMode: 'onBlur' });
+
+  const route = useRouter();
+
+  const isValid = Object.keys(errors).length !== 0;
+
+  useEffect(() => {
+    setFocus('email');
+  }, [setFocus]);
+
+  const onSubmit = async ({ email, password }: InputItem) => {
+    try {
+      const response = await userSignin({ email: email, password: password });
+
+      if (response.status === 200) {
+        route.push('/folder');
+      }
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        setError('email', { type: 'manual', message: ERROR_MESSAGE.CHECK_EMAIL });
+        setError('password', { type: 'manual', message: ERROR_MESSAGE.CHECK_PASSWORD });
+      }
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(onSubmit)();
+    }
+  };
+
   return (
-    <form className='flex flex-col gap-[1.875rem]'>
+    <form className='flex flex-col gap-[1.875rem]' onSubmit={handleSubmit(onSubmit)} onKeyDown={handleKeyDown}>
       <FormTitle question='회원이 아니신가요?' linkMessage='회원 가입하기' path='/signup' />
       <EmailInput
         register={register('email', {
@@ -25,7 +64,7 @@ const SigninPage = () => {
             message: ERROR_MESSAGE.EMPTY_EMAIL,
           },
           pattern: {
-            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+            value: regexr.email,
             message: ERROR_MESSAGE.INVALID_EMAIL_FORMAT,
           },
         })}
@@ -52,7 +91,9 @@ const SigninPage = () => {
         clearError={clearErrors}
         error={errors.password as FieldError}
       />
-      <Button type='submit'>로그인</Button>
+      <Button type='submit' disabled={isValid}>
+        로그인
+      </Button>
       <SocialLogin title='소셜 로그인' />
     </form>
   );
