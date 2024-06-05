@@ -13,6 +13,7 @@ const config: Config = {
         red: '#FF5B56',
         black: '#111322',
         white: '#FFFFFF',
+        gray: '#F5F5F5',
         gray10: '#E7EFFB',
         gray20: '#CCD5E3',
         gray60: '#9FA6B2',

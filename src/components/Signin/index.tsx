@@ -13,6 +13,7 @@ import { InputItem } from '@/types/inputType';
 import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
 import { userSignin } from '@/utils/apis/auth/userSignin';
 import { regexr } from '@/utils/regrex';
+import { setAccessToken } from '@/utils/apis/token';
 
 const SigninPage = () => {
   const {
@@ -35,8 +36,9 @@ const SigninPage = () => {
   const onSubmit = async ({ email, password }: InputItem) => {
     try {
       const response = await userSignin({ email: email, password: password });
-
+      const accessToken = response.data.accessToken;
       if (response.status === 200) {
+        setAccessToken(accessToken);
         route.push('/folder');
       }
     } catch (error: any) {
