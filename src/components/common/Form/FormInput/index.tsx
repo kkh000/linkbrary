@@ -35,7 +35,6 @@ const FormInput = ({ id, title, placeholder, type, error, register, clearError, 
           className=' w-full '
           placeholder={placeholder}
           {...register}
-          autoComplete='one-time-code'
           onFocus={() => {
             switch (focusType) {
               case 'text':

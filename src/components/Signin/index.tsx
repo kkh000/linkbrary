@@ -14,6 +14,7 @@ import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
 import { userSignin } from '@/utils/apis/auth/userSignin';
 import { regexr } from '@/utils/regrex';
 import { setAccessToken } from '@/utils/apis/token';
+import { loginStore } from '@/store/store';
 
 const SigninPage = () => {
   const {
@@ -26,6 +27,7 @@ const SigninPage = () => {
   } = useForm<InputItem>({ mode: 'onBlur', reValidateMode: 'onBlur' });
 
   const route = useRouter();
+  const { setIsLoggedIn } = loginStore();
 
   const isValid = Object.keys(errors).length !== 0;
 
@@ -39,6 +41,7 @@ const SigninPage = () => {
       const accessToken = response.data.accessToken;
       if (response.status === 200) {
         setAccessToken(accessToken);
+        setIsLoggedIn(true);
         route.push('/folder/all');
       }
     } catch (error: any) {
