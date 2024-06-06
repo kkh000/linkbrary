@@ -73,10 +73,11 @@ const FolderPage = () => {
   }, []);
 
   const hasKeyword = searchKeyword ? filteredCardList : userCardList;
+  const hasEditToolbar = queryId === 'all' || queryId === 'favorite';
 
   return (
     <main className='flex flex-col justify-center items-center w-full '>
-      <AddFolderInput />
+      <AddFolderInput folderList={userFolderList} />
       <section className='flex flex-col justify-center items-center w-full pt-10 pb-[6.25rem] bg-white '>
         <div className='w-[66.25rem]'>
           <SearchInput setSearchKeyword={setSearchKeyword} />
@@ -90,7 +91,7 @@ const FolderPage = () => {
           </div>
           <div className='flex justify-between items-center'>
             <h2 className='text-2xl font-bold'>{folderName}</h2>
-            <EditToolbar />
+            {!hasEditToolbar && <EditToolbar folderName={folderName} />}
           </div>
         </div>
         {hasKeyword.length > 0 ? (
@@ -103,6 +104,7 @@ const FolderPage = () => {
                 createdAt={card.created_at}
                 description={card.title}
                 url={card.url}
+                folderList={userFolderList}
               />
             ))}
           </div>

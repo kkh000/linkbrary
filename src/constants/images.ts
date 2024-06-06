@@ -29,4 +29,5 @@ export const ICON = {
   DELETE: '/icons/delete.svg',
   KEBAB: '/icons/kebab.svg',
   STAR: '/icons/star.svg',
+  CHECK: '/icons/check.svg',
 };

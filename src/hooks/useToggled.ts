@@ -1,18 +1,17 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
-type ToggleStates = Record<string, boolean>;
+interface ToggleStates {
+  [key: string]: boolean;
+}
 
-const useToggled = (initialStates: ToggleStates = {}) => {
-  const [isToggled, setIsToggled] = useState<ToggleStates>(initialStates);
+const useToggled = (initialStates: ToggleStates) => {
+  const [toggleStates, setToggleStates] = useState<ToggleStates>(initialStates);
 
-  const handleToggled = useCallback((key: keyof ToggleStates) => {
-    setIsToggled(prevStates => ({
-      ...prevStates,
-      [key]: !prevStates[key],
-    }));
-  }, []);
+  const handelToggeld = (key: string) => {
+    setToggleStates(prevState => ({ ...prevState, [key]: !prevState[key] }));
+  };
 
-  return [isToggled, handleToggled] as const;
+  return [toggleStates, handelToggeld] as const;
 };
 
 export default useToggled;
