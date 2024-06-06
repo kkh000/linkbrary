@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { FieldError, UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 
-import { LOGO } from '@/constants/images';
+import { ICON } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
 import { InputItem } from '@/types/inputType';
 
@@ -53,7 +53,7 @@ const FormInput = ({ id, title, placeholder, type, error, register, clearError, 
         />
         {isPasswordInput && (
           <button type='button' onClick={() => handleToggled('isShowPassword')}>
-            <Image src={isToggled.isShowPassword ? LOGO.EYE_OPEN : LOGO.EYE_CLOSE} alt='eye' width={16} height={16} />
+            <Image src={isToggled.isShowPassword ? ICON.EYE_OPEN : ICON.EYE_CLOSE} alt='eye' width={16} height={16} />
           </button>
         )}
       </div>

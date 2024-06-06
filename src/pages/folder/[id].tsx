@@ -1,7 +1,7 @@
 import FolderPage from '@/components/Folder';
 import MainLayout from '@/components/layout';
 
-const Folder = () => {
+const FolderId = () => {
   return (
     <MainLayout>
       <FolderPage />
@@ -9,4 +9,4 @@ const Folder = () => {
   );
 };
 
-export default Folder;
+export default FolderId;

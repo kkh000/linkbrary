@@ -14,3 +14,8 @@ export const PLACEHOLDER = {
   PASSWORD: '비밀번호를 입력해주세요',
   PASSWORD_FORMAT: '영문자, 숫자, 특수문자를 포함한 8자 이상',
 };
+
+export const MESSAGE = {
+  EMPTY_KEYWORD: '검색결과가 없습니다.',
+  EMPTY_CARD: '저장된 링크가 없습니다.',
+};

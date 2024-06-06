@@ -39,7 +39,7 @@ const SigninPage = () => {
       const accessToken = response.data.accessToken;
       if (response.status === 200) {
         setAccessToken(accessToken);
-        route.push('/folder');
+        route.push('/folder/all');
       }
     } catch (error: any) {
       if (error.response.status === 400) {
