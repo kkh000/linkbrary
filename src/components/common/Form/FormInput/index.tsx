@@ -21,6 +21,7 @@ const FormInput = ({ id, title, placeholder, type, error, register, clearError, 
   const [isToggled, handleToggled] = useToggled({ isShowPassword: false });
 
   const isPasswordInput = type === 'password' || type === 'passwordCheck';
+  const ErrorStyle = error?.message ? 'border-red' : 'border-gray20';
 
   return (
     <div className=' flex flex-col w-full gap-3'>
@@ -28,7 +29,7 @@ const FormInput = ({ id, title, placeholder, type, error, register, clearError, 
         {title}
       </label>
       <div
-        className={`flex justify-between gap-1 border py-[1.125rem] px-[.9375rem] ${error?.message ? 'border-red' : 'border-gray20'}  rounded-lg  bg-white overflow-hidden focus-within:border-primary`}>
+        className={`flex justify-between gap-1 border py-[1.125rem] px-[.9375rem] rounded-lg  bg-white overflow-hidden focus-within:border-primary ${ErrorStyle}`}>
         <input
           id={id}
           type={isToggled.isShowPassword ? 'text' : type}

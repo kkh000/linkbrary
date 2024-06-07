@@ -3,6 +3,7 @@ import useToggled from '@/hooks/useToggled';
 import ChangeNameModal from '@/components/common/Modal/InputModal';
 import DeleteFolderModal from '@/components/common/Modal/DeleteModal';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 interface EditToolbarProps {
   folderName: string;
@@ -11,9 +12,12 @@ interface EditToolbarProps {
 const EditToolbar = ({ folderName }: EditToolbarProps) => {
   const [isToggeld, handleToggled] = useToggled({ changeNameModal: false, deleteFolderModal: false });
 
+  const route = useRouter();
+  const folderId = route.query.id;
+
   return (
     <div className='flex gap-3'>
-      <button className='flex gap-1'>
+      <button className='flex gap-1' onClick={() => route.push(`/share/${folderId}`)}>
         <Image src={ICON.SHARE} alt='share' width={18} height={18} />
         <div className='text-sm text-gray60 font-semibold'>공유</div>
       </button>

@@ -1,17 +1,10 @@
+import { FolderListItem } from '@/types/folderListType';
 import Link from 'next/link';
 
 interface FolderListProps {
-  folderList: FolderListItemProps[];
+  folderList: FolderListItem[];
   selectedFolder: (folderName: string) => void;
   folderId: string | undefined;
-}
-
-interface FolderListItemProps {
-  id: number;
-  created_at: string;
-  favorite: boolean;
-  name: string;
-  link_count: number;
 }
 
 const SortFolder = ({ folderList, selectedFolder, folderId }: FolderListProps) => {

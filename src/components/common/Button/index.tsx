@@ -16,12 +16,11 @@ const Button = ({
   color = 'bg-primary',
   size = 'w-full py-4 px-5',
 }: ButtonProps) => {
+  const defaultButtonStyle =
+    'text-lg font-semibold text-white rounded-lg hover:opacity-80 disabled:bg-gray60 hover:disabled:opacity-100';
+
   return (
-    <button
-      className={`${size}  ${color} text-lg font-semibold text-white rounded-lg hover:opacity-80 disabled:bg-gray60 hover:disabled:opacity-100`}
-      type={type}
-      onClick={onClick}
-      disabled={disabled}>
+    <button className={`${defaultButtonStyle} ${size} ${color}`} type={type} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

@@ -42,6 +42,8 @@ const UserProfile = () => {
           secondTitle='로그아웃'
           position='top-[40px] left-[-15px]'
           onClickSecondButton={handleLogout}
+          onClickFirstButton={() => route.push('/my-page')}
+          closePopover={() => handleToggled('popover')}
         />
       )}
     </button>

@@ -5,7 +5,7 @@ import AddFolderInput from './AddFolderInput';
 import EditToolbar from './EditToolbar';
 import SearchInput from './SearchInput';
 import SortFolder from './SortFolder';
-import Card from './Card';
+import Card from '../common/Card';
 import { useCallback, useEffect, useState } from 'react';
 import instance from '@/utils/apis/axios';
 import { useRouter } from 'next/router';

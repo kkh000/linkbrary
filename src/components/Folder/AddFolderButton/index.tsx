@@ -8,7 +8,7 @@ const AddFolderButton = () => {
   const [isToggled, handleToggled] = useToggled({ addModal: false });
 
   return (
-    <button className='flex items-center  gap-1' onClick={() => handleToggled('addFolderModal')}>
+    <button className='flex items-center gap-1' onClick={() => handleToggled('addFolderModal')}>
       <span className=' font-medium text-primary'>폴더추가</span>
       <Image src={ICON.PLUS} alt='plus' width={16} height={160} />
       {isToggled.addFolderModal && (

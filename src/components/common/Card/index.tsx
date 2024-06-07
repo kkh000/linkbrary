@@ -1,15 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image';
 
-import { ICON, IMAGE } from '@/constants/images';
+import { IMAGE } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
 import Popover from '@/components/common/Popover';
 import DeleteLinkModal from '@/components/common/Modal/DeleteModal';
 import ListModal from '@/components/common/Modal/ListModal';
-import convertDuration from '@/utils/convertDuration';
-import convertDate from '@/utils/convertDate';
 import Link from 'next/link';
 import { FolderListItem } from '@/types/folderListType';
+import { useRouter } from 'next/router';
+import CardContent from './CardContent';
 
 interface CardProps {
   id: number;
@@ -17,16 +16,14 @@ interface CardProps {
   url: string;
   description: string;
   image_source: string;
-  folderList: FolderListItem[];
+  folderList?: FolderListItem[];
 }
 
 const Card = ({ id, createdAt, description, url, image_source, folderList }: CardProps) => {
   const [isToggled, handleToggled] = useToggled({ popvoer: false, deleteLinkModal: false, listModal: false });
 
-  const handleTogglePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    handleToggled('popover');
-  };
+  const route = useRouter();
+  const pagePath = route.asPath.split('/')[1];
 
   return (
     <div key={id} className='relative'>
@@ -39,29 +36,20 @@ const Card = ({ id, createdAt, description, url, image_source, folderList }: Car
           }}
           alt='none'
         />
-        <div className='flex flex-col justify-between gap-[.625rem] px-5 py-[.9375rem] hover:bg-gray10'>
-          <div className='relative flex justify-between'>
-            <div className='text-gray60 text-sm'>{convertDuration(createdAt)}</div>
-            <button className='hover:bg-gray20 hover:opacity-50 p-1 hover:rounded-full ' onClick={handleTogglePopover}>
-              <Image src={ICON.KEBAB} alt='kebab' width={21} height={17} />
-            </button>
-          </div>
-          <p className='truncate h-[3.0625rem]'>{description}</p>
-          <div className='text-sm'>{convertDate(createdAt)}</div>
-        </div>
+        <CardContent
+          createdAt={createdAt}
+          description={description}
+          handleToggled={() => handleToggled('popover')}
+          pagePath={pagePath}
+        />
       </Link>
-      <Image
-        className='absolute top-[15px] right-[15px] cursor-pointer'
-        src={ICON.STAR}
-        alt='star'
-        width={34}
-        height={34}
-      />
+
       {isToggled.popover && (
         <Popover
           firstTitle='삭제하기'
           onClickFirstButton={() => handleToggled('deleteLinkModal')}
           onClickSecondButton={() => handleToggled('listModal')}
+          closePopover={() => handleToggled('popover')}
           secondTitle='폴더에 추가'
           position='top-[230px] right-[-60px]'
         />
