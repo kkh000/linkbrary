@@ -8,7 +8,7 @@ const FolderProfile = () => {
   const [folderUserInformaiton, setFolderUserInformation] = useState({ image_source: '', email: '' });
 
   const route = useRouter();
-  const folderId = route.query.id;
+  const folderId = route.query.id as string;
   const userId = folderInformation.user_id;
 
   const getFolderProfile = async (folderId: string) => {
@@ -20,7 +20,7 @@ const FolderProfile = () => {
   };
 
   useEffect(() => {
-    getFolderProfile(String(folderId));
+    getFolderProfile(folderId);
   }, [folderId]);
 
   const getFolderUser = async (userId: number) => {

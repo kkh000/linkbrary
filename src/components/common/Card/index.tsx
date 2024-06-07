@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { IMAGE } from '@/constants/images';
+import Image from 'next/image';
+import { ICON, IMAGE } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
 import Popover from '@/components/common/Popover';
 import DeleteLinkModal from '@/components/common/Modal/DeleteModal';
@@ -9,6 +10,7 @@ import Link from 'next/link';
 import { FolderListItem } from '@/types/folderListType';
 import { useRouter } from 'next/router';
 import CardContent from './CardContent';
+import instance from '@/utils/apis/axios';
 
 interface CardProps {
   id: number;
@@ -16,14 +18,57 @@ interface CardProps {
   url: string;
   description: string;
   image_source: string;
+  favorite: boolean;
   folderList?: FolderListItem[];
+  renderingCardList: (folderId: string) => void;
 }
 
-const Card = ({ id, createdAt, description, url, image_source, folderList }: CardProps) => {
+const Card = ({
+  id,
+  createdAt,
+  description,
+  url,
+  image_source,
+  favorite,
+  folderList,
+  renderingCardList,
+}: CardProps) => {
   const [isToggled, handleToggled] = useToggled({ popvoer: false, deleteLinkModal: false, listModal: false });
 
   const route = useRouter();
   const pagePath = route.asPath.split('/')[1];
+  const folderId = route.query.id as string;
+
+  const deleteLink = async () => {
+    try {
+      const response = await instance.delete(`/links/${id}`);
+      if (response.status === 204) {
+        handleToggled('deleteLinkModal');
+        renderingCardList(folderId);
+      }
+    } catch (error) {}
+  };
+
+  const addLink = async ({ url, selectFolder }: { url: string; selectFolder: number }) => {
+    try {
+      const response = await instance.post('/links', { url: url, folderId: selectFolder });
+      if (response.status === 201) {
+        handleToggled('listModal');
+      }
+    } catch (error) {}
+  };
+
+  const changeFavorite = async () => {
+    try {
+      const newFavorite = !favorite;
+      const response = await instance.put(`/links/${id}`, { favorite: newFavorite });
+      if (response.status === 201) {
+        renderingCardList(folderId);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div key={id} className='relative'>
@@ -43,6 +88,11 @@ const Card = ({ id, createdAt, description, url, image_source, folderList }: Car
           pagePath={pagePath}
         />
       </Link>
+      {pagePath !== 'share' && (
+        <button className='absolute top-[15px] right-[15px]' onClick={changeFavorite}>
+          <Image src={favorite ? ICON.STAR_BLUE : ICON.STAR} alt='star' width={34} height={34} />
+        </button>
+      )}
 
       {isToggled.popover && (
         <Popover
@@ -55,7 +105,11 @@ const Card = ({ id, createdAt, description, url, image_source, folderList }: Car
         />
       )}
       {isToggled.deleteLinkModal && (
-        <DeleteLinkModal title='링크 삭제' content={url} handleModal={() => handleToggled('deleteLinkModal')}>
+        <DeleteLinkModal
+          title='링크 삭제'
+          content={url}
+          handleModal={() => handleToggled('deleteLinkModal')}
+          onClick={deleteLink}>
           삭제하기
         </DeleteLinkModal>
       )}
@@ -64,7 +118,8 @@ const Card = ({ id, createdAt, description, url, image_source, folderList }: Car
           title='폴더에 추가'
           content={url}
           handleModal={() => handleToggled('listModal')}
-          folderList={folderList}>
+          folderList={folderList}
+          onClick={(selectFolder: number) => addLink({ url: url, selectFolder: selectFolder })}>
           추가하기
         </ListModal>
       )}

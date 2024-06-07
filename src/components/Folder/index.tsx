@@ -27,7 +27,7 @@ const FolderPage = () => {
   const [folderName, setFolderName] = useState('전체');
 
   const route = useRouter();
-  const queryId = route.query.id?.toString();
+  const folderId = route.query.id as string;
 
   const filteredCardList = userCardList.filter(item => item.title.toLowerCase().includes(searchKeyword.toLowerCase()));
 
@@ -35,63 +35,73 @@ const FolderPage = () => {
     try {
       const endpoint = folderId === 'all' || folderId === 'favorite' ? '/links' : `/folders/${folderId}/links`;
       const response = await instance.get(endpoint);
-      const result = response.data;
-      setUserCardList(result);
+      setUserCardList(response.data);
     } catch (error) {
       console.error(error);
     }
   }, []);
 
   useEffect(() => {
-    if (queryId !== undefined) {
-      getCardList(queryId);
+    if (folderId !== undefined) {
+      getCardList(folderId);
     }
-    if (queryId === 'all') {
+    if (folderId === 'all') {
       getCardList('all');
     }
-    if (queryId === 'favorite') {
+    if (folderId === 'favorite') {
       getCardList('favorite');
     }
-  }, [getCardList, queryId]);
+  }, [getCardList, folderId]);
 
   const getFolderList = async () => {
     try {
       const response = await instance.get('/folders');
-      const result = response.data;
-      setUserFolderList(result);
-    } catch (error) {
-      console.error('Error fetching folder list:', error);
-    }
+      setUserFolderList(response.data);
+    } catch (error) {}
   };
 
   useEffect(() => {
     getFolderList();
   }, []);
 
-  const handleFolderSelection = useCallback((folderName: string) => {
-    setFolderName(folderName);
-  }, []);
+  const getFolderProfile = async (folderId: string) => {
+    if (folderId === 'all') {
+      setFolderName('전체');
+    }
+
+    if (folderId === 'favorite') {
+      setFolderName('⭐️ 즐겨찾기');
+    }
+
+    if (folderId !== 'all' && folderId !== 'favorite') {
+      try {
+        const response = await instance.get(`/folders/${folderId}`);
+
+        setFolderName(response.data[0].name);
+      } catch (error) {}
+    }
+  };
+
+  useEffect(() => {
+    getFolderProfile(folderId);
+  }, [folderId]);
 
   const hasKeyword = searchKeyword ? filteredCardList : userCardList;
-  const hasEditToolbar = queryId === 'all' || queryId === 'favorite';
+  const hasEditToolbar = folderId === 'all' || folderId === 'favorite';
 
   return (
     <main className='flex flex-col justify-center items-center w-full '>
-      <AddFolderInput folderList={userFolderList} />
+      <AddFolderInput folderList={userFolderList} renderingCardList={getCardList} />
       <section className='flex flex-col justify-center items-center w-full pt-10 pb-[6.25rem] bg-white '>
         <div className='w-[66.25rem]'>
           <SearchInput setSearchKeyword={setSearchKeyword} />
           <div className='flex justify-between items-center mb-6'>
-            <SortFolder
-              folderList={userFolderList}
-              selectedFolder={handleFolderSelection}
-              folderId={queryId?.toString()}
-            />
-            <AddFolderButton />
+            <SortFolder folderList={userFolderList} folderId={folderId} />
+            <AddFolderButton renderingFolderList={getFolderList} />
           </div>
           <div className='flex justify-between items-center'>
             <h2 className='text-2xl font-bold'>{folderName}</h2>
-            {!hasEditToolbar && <EditToolbar folderName={folderName} />}
+            {!hasEditToolbar && <EditToolbar folderName={folderName} renderingFolderList={getFolderList} />}
           </div>
         </div>
         {hasKeyword.length > 0 ? (
@@ -105,6 +115,7 @@ const FolderPage = () => {
                 description={card.title}
                 url={card.url}
                 folderList={userFolderList}
+                renderingCardList={getCardList}
               />
             ))}
           </div>
