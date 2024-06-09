@@ -15,6 +15,7 @@ import { userSignin } from '@/utils/apis/auth/userSignin';
 import { regexr } from '@/utils/regrex';
 import { setAccessToken } from '@/utils/apis/token';
 import { loginStore } from '@/store/store';
+import useRedirect from '@/hooks/useRedirect';
 
 const SigninPage = () => {
   const {
@@ -25,6 +26,8 @@ const SigninPage = () => {
     setFocus,
     setError,
   } = useForm<InputItem>({ mode: 'onBlur', reValidateMode: 'onBlur' });
+
+  useRedirect('folder/all');
 
   const route = useRouter();
   const { setIsLoggedIn } = loginStore();

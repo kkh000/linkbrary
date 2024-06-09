@@ -18,21 +18,11 @@ interface CardProps {
   url: string;
   description: string;
   image_source: string;
-  favorite: boolean;
   folderList?: FolderListItem[];
   renderingCardList: (folderId: string) => void;
 }
 
-const Card = ({
-  id,
-  createdAt,
-  description,
-  url,
-  image_source,
-  favorite,
-  folderList,
-  renderingCardList,
-}: CardProps) => {
+const Card = ({ id, createdAt, description, url, image_source, folderList, renderingCardList }: CardProps) => {
   const [isToggled, handleToggled] = useToggled({ popvoer: false, deleteLinkModal: false, listModal: false });
 
   const route = useRouter();
@@ -58,18 +48,6 @@ const Card = ({
     } catch (error) {}
   };
 
-  const changeFavorite = async () => {
-    try {
-      const newFavorite = !favorite;
-      const response = await instance.put(`/links/${id}`, { favorite: newFavorite });
-      if (response.status === 201) {
-        renderingCardList(folderId);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <div key={id} className='relative'>
       <Link className='flex flex-col w-[21.25rem] h-[20.875rem] shadow-md rounded-2xl' href={url} target='_blank'>
@@ -89,8 +67,8 @@ const Card = ({
         />
       </Link>
       {pagePath !== 'share' && (
-        <button className='absolute top-[15px] right-[15px]' onClick={changeFavorite}>
-          <Image src={favorite ? ICON.STAR_BLUE : ICON.STAR} alt='star' width={34} height={34} />
+        <button className='absolute top-[15px] right-[15px]'>
+          <Image src={ICON.STAR} alt='star' width={34} height={34} />
         </button>
       )}
 

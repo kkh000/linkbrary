@@ -11,6 +11,7 @@ import instance from '@/utils/apis/axios';
 import { useRouter } from 'next/router';
 import EmptyContent from '../common/EmptyContent';
 import { MESSAGE } from '@/constants/text';
+import useRedirect from '@/hooks/useRedirect';
 
 interface CardProps {
   id: number;
@@ -26,6 +27,7 @@ const FolderPage = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [folderName, setFolderName] = useState('전체');
 
+  useRedirect('/signin', true);
   const route = useRouter();
   const folderId = route.query.id as string;
 

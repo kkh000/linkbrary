@@ -14,6 +14,7 @@ import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
 import { userSignup } from '@/utils/apis/auth/useSignup';
 import { checkDuplication } from '@/utils/apis/auth/checkDuplication';
 import { regexr } from '@/utils/regrex';
+import useRedirect from '@/hooks/useRedirect';
 
 const SignupPage = () => {
   const {
@@ -28,6 +29,8 @@ const SignupPage = () => {
   const route = useRouter();
 
   const isValid = Object.keys(errors).length !== 0;
+
+  useRedirect('folder/all');
 
   useEffect(() => {
     setFocus('email');

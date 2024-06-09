@@ -10,6 +10,7 @@ export const getAccessToken = () => {
   if (typeof window !== 'undefined') {
     return localStorage.getItem(ACCESS_TOKEN);
   }
+  return null;
 };
 
 export const removeAccessToken = () => {

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import EmptyContent from '../common/EmptyContent';
 import Card from '../common/Card';
 import { MESSAGE } from '@/constants/text';
+import useRedirect from '@/hooks/useRedirect';
 
 interface CardProps {
   id: number;
@@ -20,6 +21,7 @@ const SharePage = () => {
   const [userCardList, setUserCardList] = useState<CardProps[]>([]);
 
   const route = useRouter();
+  useRedirect('/signin', true);
   const folderId = route.query.id;
 
   const filteredCardList = userCardList.filter(item => item.title.toLowerCase().includes(searchKeyword.toLowerCase()));
@@ -57,6 +59,7 @@ const SharePage = () => {
                 createdAt={card.created_at}
                 description={card.title}
                 url={card.url}
+                renderingCardList={() => {}}
               />
             ))}
           </div>
