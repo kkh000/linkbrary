@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react';
 import { loginStore } from '@/store/store';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '../common/Button';
 import UserProfile from './UserProfile';
 import { LOGO } from '@/constants/images';
+import useClientSide from '@/hooks/useClientSide';
 
 const Navigation = () => {
   const { isLoggedIn } = loginStore();
-  const [clientSide, setClientSide] = useState(false);
-
-  useEffect(() => {
-    setClientSide(true);
-  }, []);
+  const clientSide = useClientSide();
 
   return (
     <nav className='sticky flex justify-between items-center px-[12.5rem] py-5'>

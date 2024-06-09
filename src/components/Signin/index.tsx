@@ -11,11 +11,13 @@ import SocialLogin from '../common/Form/SocialLogin';
 
 import { InputItem } from '@/types/inputType';
 import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
-import { userSignin } from '@/utils/apis/auth/userSignin';
+import { userSignin } from '@/utils/apis/authApi';
 import { regexr } from '@/utils/regrex';
 import { setAccessToken } from '@/utils/apis/token';
 import { loginStore } from '@/store/store';
 import useRedirect from '@/hooks/useRedirect';
+import instance from '@/utils/apis/axios';
+import { useUserStore } from '@/store/userStore';
 
 const SigninPage = () => {
   const {
@@ -27,10 +29,11 @@ const SigninPage = () => {
     setError,
   } = useForm<InputItem>({ mode: 'onBlur', reValidateMode: 'onBlur' });
 
-  useRedirect('folder/all');
+  useRedirect('/folder/all', false);
 
   const route = useRouter();
   const { setIsLoggedIn } = loginStore();
+  const { setUserProfile } = useUserStore();
 
   const isValid = Object.keys(errors).length !== 0;
 
@@ -41,14 +44,18 @@ const SigninPage = () => {
   const onSubmit = async ({ email, password }: InputItem) => {
     try {
       const response = await userSignin({ email: email, password: password });
-      const accessToken = response.data.accessToken;
-      if (response.status === 200) {
+      const accessToken = response?.data.accessToken;
+      if (response?.status === 200) {
         setAccessToken(accessToken);
         setIsLoggedIn(true);
         route.push('/folder/all');
+
+        const userProfileResponse = await instance.get('/users');
+        const userProfileData = userProfileResponse.data[0];
+        setUserProfile(userProfileData);
       }
     } catch (error: any) {
-      if (error.response.status === 400) {
+      if (error.response?.status === 400) {
         setError('email', { type: 'manual', message: ERROR_MESSAGE.CHECK_EMAIL });
         setError('password', { type: 'manual', message: ERROR_MESSAGE.CHECK_PASSWORD });
       }

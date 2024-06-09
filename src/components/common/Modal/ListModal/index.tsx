@@ -18,6 +18,7 @@ interface ModalProps {
 
 const ListModal = ({ handleModal, title, children, content, folderList, onClick }: ModalProps) => {
   const { selectItem, handleSelectItem, isSelected } = useSelect({});
+
   return (
     <ModalLayout handleModal={() => handleModal}>
       <div className='relative flex flex-col  w-[23.75rem] px-[2.5rem] py-8'>

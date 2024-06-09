@@ -11,8 +11,7 @@ import SocialLogin from '../common/Form/SocialLogin';
 
 import { InputItem } from '@/types/inputType';
 import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
-import { userSignup } from '@/utils/apis/auth/useSignup';
-import { checkDuplication } from '@/utils/apis/auth/checkDuplication';
+import { userSignup, checkDuplicateEmail } from '@/utils/apis/authApi';
 import { regexr } from '@/utils/regrex';
 import useRedirect from '@/hooks/useRedirect';
 
@@ -30,7 +29,7 @@ const SignupPage = () => {
 
   const isValid = Object.keys(errors).length !== 0;
 
-  useRedirect('folder/all');
+  useRedirect('/folder/all', false);
 
   useEffect(() => {
     setFocus('email');
@@ -38,7 +37,7 @@ const SignupPage = () => {
 
   const checkEmail = async (email: string) => {
     try {
-      const response = await checkDuplication({ email: email });
+      const response = await checkDuplicateEmail({ email: email });
       return response.status !== 409;
     } catch (error) {}
   };

@@ -5,7 +5,7 @@ import { FolderListItem } from '@/types/folderListType';
 import useToggled from '@/hooks/useToggled';
 import ListModal from '@/components/common/Modal/ListModal';
 import useInput from '@/hooks/useInput';
-import instance from '@/utils/apis/axios';
+import { createLink } from '@/utils/apis/linkApis';
 
 interface AddFolderInputProps {
   folderList: FolderListItem[];
@@ -16,14 +16,12 @@ const AddFolderInput = ({ folderList, renderingCardList }: AddFolderInputProps) 
   const [isToggled, handleToggled] = useToggled({ listModal: false });
   const { value, onChange } = useInput('');
 
-  const addLink = async ({ linkUrl, folderId }: { linkUrl: string; folderId: number }) => {
-    try {
-      const response = await instance.post('/links', { url: linkUrl, folderId: folderId });
-      if (response.status === 201) {
-        handleToggled('listModal');
-        renderingCardList(String(folderId));
-      }
-    } catch (error) {}
+  const handleCreateLink = async ({ url, folderId }: { url: string; folderId: number }) => {
+    const response = await createLink({ url: url, folderId: folderId });
+    if (response?.status === 201) {
+      handleToggled('listModal');
+      renderingCardList(String(folderId));
+    }
   };
 
   return (
@@ -41,7 +39,7 @@ const AddFolderInput = ({ folderList, renderingCardList }: AddFolderInputProps) 
           content={value}
           folderList={folderList}
           handleModal={() => handleToggled('listModal')}
-          onClick={(folderId: number) => addLink({ linkUrl: value, folderId: folderId })}>
+          onClick={(folderId: number) => handleCreateLink({ url: value, folderId: folderId })}>
           추가하기
         </ListModal>
       )}

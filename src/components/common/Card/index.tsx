@@ -10,43 +10,42 @@ import Link from 'next/link';
 import { FolderListItem } from '@/types/folderListType';
 import { useRouter } from 'next/router';
 import CardContent from './CardContent';
-import instance from '@/utils/apis/axios';
+import { CardProps } from '@/types/cardType';
 
-interface CardProps {
-  id: number;
-  createdAt: string;
-  url: string;
-  description: string;
-  image_source: string;
+import { createLink, deleteLink } from '@/utils/apis/linkApis';
+
+interface CardItemProps extends CardProps {
   folderList?: FolderListItem[];
   renderingCardList: (folderId: string) => void;
 }
 
-const Card = ({ id, createdAt, description, url, image_source, folderList, renderingCardList }: CardProps) => {
+const Card = ({ id, created_at, description, url, image_source, folderList, renderingCardList }: CardItemProps) => {
   const [isToggled, handleToggled] = useToggled({ popvoer: false, deleteLinkModal: false, listModal: false });
 
   const route = useRouter();
   const pagePath = route.asPath.split('/')[1];
   const folderId = route.query.id as string;
 
-  const deleteLink = async () => {
-    try {
-      const response = await instance.delete(`/links/${id}`);
-      if (response.status === 204) {
-        handleToggled('deleteLinkModal');
-        renderingCardList(folderId);
-      }
-    } catch (error) {}
+  const handleDeleteLink = async () => {
+    const response = await deleteLink({ cardId: id });
+    if (response?.status === 204) {
+      handleToggled('deleteLinkModal');
+      renderingCardList(folderId);
+    }
   };
 
-  const addLink = async ({ url, selectFolder }: { url: string; selectFolder: number }) => {
-    try {
-      const response = await instance.post('/links', { url: url, folderId: selectFolder });
-      if (response.status === 201) {
-        handleToggled('listModal');
-      }
-    } catch (error) {}
+  const handleCreateLink = async () => {
+    const response = await createLink({ url: url, folderId: folderId });
+    if (response?.status === 201) {
+      handleToggled('listModal');
+    }
   };
+
+  const handleErorrIamge = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    (event.target as HTMLImageElement).src = IMAGE.NO_IMAGE;
+  };
+
+  const onlyFolderPage = pagePath !== 'share';
 
   return (
     <div key={id} className='relative'>
@@ -54,19 +53,17 @@ const Card = ({ id, createdAt, description, url, image_source, folderList, rende
         <img
           className='object-cover rounded-t-2xl w-[21.25rem] h-[17.5rem] overflow-hidden'
           src={image_source}
-          onError={event => {
-            (event.target as HTMLImageElement).src = IMAGE.NO_IMAGE;
-          }}
+          onError={handleErorrIamge}
           alt='none'
         />
         <CardContent
-          createdAt={createdAt}
+          createdAt={created_at}
           description={description}
           handleToggled={() => handleToggled('popover')}
           pagePath={pagePath}
         />
       </Link>
-      {pagePath !== 'share' && (
+      {onlyFolderPage && (
         <button className='absolute top-[15px] right-[15px]'>
           <Image src={ICON.STAR} alt='star' width={34} height={34} />
         </button>
@@ -75,10 +72,10 @@ const Card = ({ id, createdAt, description, url, image_source, folderList, rende
       {isToggled.popover && (
         <Popover
           firstTitle='삭제하기'
+          secondTitle='폴더에 추가'
           onClickFirstButton={() => handleToggled('deleteLinkModal')}
           onClickSecondButton={() => handleToggled('listModal')}
           closePopover={() => handleToggled('popover')}
-          secondTitle='폴더에 추가'
           position='top-[230px] right-[-60px]'
         />
       )}
@@ -87,7 +84,7 @@ const Card = ({ id, createdAt, description, url, image_source, folderList, rende
           title='링크 삭제'
           content={url}
           handleModal={() => handleToggled('deleteLinkModal')}
-          onClick={deleteLink}>
+          onClick={handleDeleteLink}>
           삭제하기
         </DeleteLinkModal>
       )}
@@ -97,7 +94,7 @@ const Card = ({ id, createdAt, description, url, image_source, folderList, rende
           content={url}
           handleModal={() => handleToggled('listModal')}
           folderList={folderList}
-          onClick={(selectFolder: number) => addLink({ url: url, selectFolder: selectFolder })}>
+          onClick={handleCreateLink}>
           추가하기
         </ListModal>
       )}

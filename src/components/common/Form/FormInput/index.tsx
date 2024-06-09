@@ -20,8 +20,25 @@ interface FormInputProps {
 const FormInput = ({ id, title, placeholder, type, error, register, clearError, focusType }: FormInputProps) => {
   const [isToggled, handleToggled] = useToggled({ isShowPassword: false });
 
-  const isPasswordInput = type === 'password' || type === 'passwordCheck';
   const ErrorStyle = error?.message ? 'border-red' : 'border-gray20';
+
+  const handleErrorType = () => {
+    switch (focusType) {
+      case 'text':
+        return clearError ? clearError('text') : '';
+      case 'email':
+        return clearError ? clearError('email') : '';
+      case 'password':
+        return clearError ? clearError('password') : '';
+      case 'passwordCheck':
+        return clearError ? clearError('passwordCheck') : '';
+      default:
+        return clearError ? clearError('text') : '';
+    }
+  };
+
+  const onlyPasswordType = type === 'password' || type === 'passwordCheck';
+  const visiblePassword = isToggled.isShowPassword ? 'text' : type;
 
   return (
     <div className=' flex flex-col w-full gap-3'>
@@ -32,26 +49,13 @@ const FormInput = ({ id, title, placeholder, type, error, register, clearError, 
         className={`flex justify-between gap-1 border py-[1.125rem] px-[.9375rem] rounded-lg  bg-white overflow-hidden focus-within:border-primary ${ErrorStyle}`}>
         <input
           id={id}
-          type={isToggled.isShowPassword ? 'text' : type}
-          className=' w-full '
+          className='w-full'
+          type={visiblePassword}
           placeholder={placeholder}
           {...register}
-          onFocus={() => {
-            switch (focusType) {
-              case 'text':
-                return clearError ? clearError('text') : '';
-              case 'email':
-                return clearError ? clearError('email') : '';
-              case 'password':
-                return clearError ? clearError('password') : '';
-              case 'passwordCheck':
-                return clearError ? clearError('passwordCheck') : '';
-              default:
-                return clearError ? clearError('text') : '';
-            }
-          }}
+          onFocus={handleErrorType}
         />
-        {isPasswordInput && (
+        {onlyPasswordType && (
           <button type='button' onClick={() => handleToggled('isShowPassword')}>
             <Image src={isToggled.isShowPassword ? ICON.EYE_OPEN : ICON.EYE_CLOSE} alt='eye' width={16} height={16} />
           </button>

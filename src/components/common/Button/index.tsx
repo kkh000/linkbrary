@@ -8,6 +8,9 @@ interface ButtonProps {
   size?: string;
 }
 
+const baseStyle =
+  'text-lg font-semibold text-white rounded-lg hover:opacity-80 disabled:bg-gray60 hover:disabled:opacity-100';
+
 const Button = ({
   children,
   onClick,
@@ -16,11 +19,8 @@ const Button = ({
   color = 'bg-primary',
   size = 'w-full py-4 px-5',
 }: ButtonProps) => {
-  const defaultButtonStyle =
-    'text-lg font-semibold text-white rounded-lg hover:opacity-80 disabled:bg-gray60 hover:disabled:opacity-100';
-
   return (
-    <button className={`${defaultButtonStyle} ${size} ${color}`} type={type} onClick={onClick} disabled={disabled}>
+    <button className={`${baseStyle} ${size} ${color}`} type={type} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

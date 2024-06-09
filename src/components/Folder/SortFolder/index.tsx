@@ -3,12 +3,11 @@ import Link from 'next/link';
 
 interface FolderListProps {
   folderList: FolderListItem[];
-
   folderId: string;
 }
 
 const SortFolder = ({ folderList, folderId }: FolderListProps) => {
-  const myFolderList = [{ id: 'all', name: '전체' }, { id: 'favorite', name: '⭐️ 즐겨찾기' }, ...folderList];
+  const myFolderList = [{ id: 'all', name: '전체' }, ...folderList];
 
   return (
     <div className='flex gap-2'>

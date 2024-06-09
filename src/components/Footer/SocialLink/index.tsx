@@ -3,6 +3,21 @@ import Link from 'next/link';
 
 import { LOGO } from '@/constants/images';
 
+const SocialLink = () => {
+  return (
+    <div className='flex gap-3'>
+      {SOCIAL_ICON_LIST &&
+        SOCIAL_ICON_LIST.map((icon, index) => (
+          <Link href={icon.url} key={index}>
+            <Image src={icon.image} alt='logo' width={20} height={20} />
+          </Link>
+        ))}
+    </div>
+  );
+};
+
+export default SocialLink;
+
 const SOCIAL_ICON_LIST = [
   {
     url: 'https://www.facebook.com',
@@ -21,18 +36,3 @@ const SOCIAL_ICON_LIST = [
     image: LOGO.INSTAGRAM_LOGO,
   },
 ];
-
-const SocialLink = () => {
-  return (
-    <div className='flex gap-3'>
-      {SOCIAL_ICON_LIST &&
-        SOCIAL_ICON_LIST.map((icon, index) => (
-          <Link href={icon.url} key={index}>
-            <Image src={icon.image} alt='logo' width={20} height={20} />
-          </Link>
-        ))}
-    </div>
-  );
-};
-
-export default SocialLink;

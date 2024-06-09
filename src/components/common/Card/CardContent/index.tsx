@@ -16,16 +16,20 @@ const CardContent = ({ createdAt, description, pagePath, handleToggled }: CardCo
     handleToggled('popover');
   };
 
+  const createDuration = convertDuration(createdAt);
+  const createDate = convertDate(createdAt);
+  const onlyFolderPage = pagePath !== 'share';
+
   return (
     <div className='flex flex-col justify-between gap-[.625rem] px-5 py-[.9375rem] hover:bg-gray10'>
       <div className='relative flex justify-between'>
-        <div className='text-gray60 text-sm'>{convertDuration(createdAt)}</div>
+        <div className='text-gray60 text-sm'>{createDuration}</div>
         <button className='hover:bg-gray20 hover:opacity-50 p-1 hover:rounded-full ' onClick={handleTogglePopover}>
-          {pagePath !== 'share' && <Image src={ICON.KEBAB} alt='kebab' width={21} height={17} />}
+          {onlyFolderPage && <Image src={ICON.KEBAB} alt='kebab' width={21} height={17} />}
         </button>
       </div>
       <p className='truncate h-[3.0625rem]'>{description}</p>
-      <div className='text-sm'>{convertDate(createdAt)}</div>
+      <div className='text-sm'>{createDate}</div>
     </div>
   );
 };

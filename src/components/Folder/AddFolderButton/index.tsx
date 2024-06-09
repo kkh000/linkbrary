@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { ICON } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
 import AddFolderModal from '@/components/common/Modal/InputModal';
-import instance from '@/utils/apis/axios';
+
+import { createFolder } from '@/utils/apis/folderApi';
 
 interface AddFolderButtonProps {
   renderingFolderList: () => void;
@@ -12,14 +13,12 @@ interface AddFolderButtonProps {
 const AddFolderButton = ({ renderingFolderList }: AddFolderButtonProps) => {
   const [isToggled, handleToggled] = useToggled({ addFolderModal: false });
 
-  const addFolder = async (newFolder: string) => {
-    try {
-      const response = await instance.post('/folders', { name: newFolder });
-      if (response.status === 201) {
-        handleToggled('addFolderModal');
-        renderingFolderList();
-      }
-    } catch (error) {}
+  const handleCreateFolder = async (name: string) => {
+    const response = await createFolder({ name });
+    if (response?.status === 201) {
+      handleToggled('addFolderModal');
+      renderingFolderList();
+    }
   };
 
   return (
@@ -30,7 +29,7 @@ const AddFolderButton = ({ renderingFolderList }: AddFolderButtonProps) => {
         <AddFolderModal
           title='폴더 추가'
           placeholder='내용 입력'
-          onClick={addFolder}
+          onClick={handleCreateFolder}
           handleModal={() => handleToggled('addFolderModal')}>
           추가하기
         </AddFolderModal>

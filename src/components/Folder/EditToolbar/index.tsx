@@ -4,7 +4,8 @@ import ChangeNameModal from '@/components/common/Modal/InputModal';
 import DeleteFolderModal from '@/components/common/Modal/DeleteModal';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import instance from '@/utils/apis/axios';
+
+import { changeFolderName, deleteFolder } from '@/utils/apis/folderApi';
 
 interface EditToolbarProps {
   folderName: string;
@@ -17,28 +18,20 @@ const EditToolbar = ({ folderName, renderingFolderList }: EditToolbarProps) => {
   const route = useRouter();
   const folderId = route.query.id as string;
 
-  const changeFolderName = async (newFolderName: string) => {
-    try {
-      const response = await instance.put(`/folders/${folderId}`, { name: newFolderName });
-
-      if (response.status === 201) {
-        handleToggled('changeNameModal');
-        renderingFolderList();
-      }
-    } catch (error) {
-      console.error(error);
+  const handleFolderName = async ({ newFolderName }: { newFolderName: string }) => {
+    const response = await changeFolderName({ folderId: folderId, newFolderName: newFolderName });
+    if (response?.status === 201) {
+      handleToggled('changeNameModal');
+      renderingFolderList();
     }
   };
 
-  const deleteFolder = async () => {
-    try {
-      const response = await instance.delete(`/folders/${folderId}`);
-
-      if (response.status === 204) {
-        handleToggled('deleteFolderModal');
-        renderingFolderList();
-      }
-    } catch (error) {}
+  const handleDeleteFolder = async () => {
+    const response = await deleteFolder({ folderId: folderId });
+    if (response?.status === 204) {
+      handleToggled('deleteFolderModal');
+      renderingFolderList();
+    }
   };
 
   return (
@@ -56,7 +49,7 @@ const EditToolbar = ({ folderName, renderingFolderList }: EditToolbarProps) => {
           title='폴더 이름 변경'
           placeholder={folderName}
           handleModal={() => handleToggled('changeNameModal')}
-          onClick={newFolderName => changeFolderName(newFolderName)}>
+          onClick={(newFolderName: string) => handleFolderName({ newFolderName })}>
           변경하기
         </ChangeNameModal>
       )}
@@ -69,7 +62,7 @@ const EditToolbar = ({ folderName, renderingFolderList }: EditToolbarProps) => {
           title='폴더 삭제'
           content={folderName}
           handleModal={() => handleToggled('deleteFolderModal')}
-          onClick={deleteFolder}>
+          onClick={handleDeleteFolder}>
           삭제하기
         </DeleteFolderModal>
       )}
