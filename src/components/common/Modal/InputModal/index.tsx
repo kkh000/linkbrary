@@ -21,7 +21,7 @@ const InputModal = ({ handleModal, title, children, placeholder, onClick }: Moda
       <div className='relative flex flex-col  w-[22.5rem] px-[2.5rem] py-8'>
         <h1 className='text-center text-2xl font-bold pb-6'>{title}</h1>
         <input
-          className='py-[1.125rem] px-[0.9375rem] placeholder:text-gray60 border border-gray20 rounded-lg mb-[.9375rem]'
+          className='py-[1.125rem] px-[0.9375rem] placeholder:text-gray60 border border-gray20 rounded-lg mb-[.9375rem] focus-visible:border-2 focus-visible:border-primary'
           placeholder={placeholder}
           value={value}
           onChange={onChange}

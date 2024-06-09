@@ -24,6 +24,7 @@ export const ICON = {
   SEARCH: '/icons/search.svg',
   CLOSE: '/icons/close.svg',
   PLUS: '/icons/plus.svg',
+  PLUS_WHITE: '/icons/plus_white.svg',
   SHARE: '/icons/share.svg',
   CHANGE: '/icons/pen.svg',
   DELETE: '/icons/delete.svg',

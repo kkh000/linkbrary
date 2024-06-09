@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { changeFolderName, deleteFolder } from '@/utils/apis/folderApi';
+import { toast } from 'react-toastify';
 
 interface EditToolbarProps {
   folderName: string;
@@ -23,6 +24,10 @@ const EditToolbar = ({ folderName, renderingFolderList }: EditToolbarProps) => {
     if (response?.status === 201) {
       handleToggled('changeNameModal');
       renderingFolderList();
+      toast.success('폴더 이름이 변경되었습니다');
+    }
+    if (response && 'message' in response) {
+      toast.error(response?.message);
     }
   };
 
@@ -31,6 +36,10 @@ const EditToolbar = ({ folderName, renderingFolderList }: EditToolbarProps) => {
     if (response?.status === 204) {
       handleToggled('deleteFolderModal');
       renderingFolderList();
+      toast.success('폴더가 삭제 되었습니다.');
+    }
+    if (response && 'message' in response) {
+      toast.error(response?.message);
     }
   };
 
@@ -38,11 +47,11 @@ const EditToolbar = ({ folderName, renderingFolderList }: EditToolbarProps) => {
     <div className='flex gap-3'>
       <button className='flex gap-1' onClick={() => route.push(`/share/${folderId}`)}>
         <Image src={ICON.SHARE} alt='share' width={18} height={18} />
-        <div className='text-sm text-gray60 font-semibold'>공유</div>
+        <div className='text-sm text-gray60 font-semibold hover:text-black'>공유</div>
       </button>
       <button className='flex gap-1' onClick={() => handleToggled('changeNameModal')}>
         <Image src={ICON.CHANGE} alt='change' width={18} height={18} />
-        <div className='text-sm text-gray60 font-semibold'>이름 변경</div>
+        <div className='text-sm text-gray60 font-semibold hover:text-black'>이름 변경</div>
       </button>
       {isToggeld.changeNameModal && (
         <ChangeNameModal
@@ -55,7 +64,7 @@ const EditToolbar = ({ folderName, renderingFolderList }: EditToolbarProps) => {
       )}
       <button className='flex gap-1' onClick={() => handleToggled('deleteFolderModal')}>
         <Image src={ICON.DELETE} alt='share' width={18} height={18} />
-        <div className='text-sm text-gray60 font-semibold'>삭제</div>
+        <div className='text-sm text-gray60 font-semibold hover:text-black'>삭제</div>
       </button>
       {isToggeld.deleteFolderModal && (
         <DeleteFolderModal

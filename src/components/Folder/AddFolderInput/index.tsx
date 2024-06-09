@@ -6,6 +6,7 @@ import useToggled from '@/hooks/useToggled';
 import ListModal from '@/components/common/Modal/ListModal';
 import useInput from '@/hooks/useInput';
 import { createLink } from '@/utils/apis/linkApis';
+import { toast } from 'react-toastify';
 
 interface AddFolderInputProps {
   folderList: FolderListItem[];
@@ -21,6 +22,10 @@ const AddFolderInput = ({ folderList, renderingCardList }: AddFolderInputProps) 
     if (response?.status === 201) {
       handleToggled('listModal');
       renderingCardList(String(folderId));
+      toast.success('링크가 추가되었습니다.');
+    }
+    if (response && 'message' in response) {
+      toast.error(response?.message);
     }
   };
 

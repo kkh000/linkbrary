@@ -15,11 +15,12 @@ import { CardProps } from '@/types/cardType';
 import { getFolderInformation, getFolderList } from '@/utils/apis/folderApi';
 import { getFolderLinkList } from '@/utils/apis/linkApis';
 import useFilterCard from '@/hooks/useFilterCard';
+import CardSkeleton from '../common/Skeleton/CardSkeleton';
 
 const FolderPage = () => {
   const [userFolderList, setUserFolderList] = useState([]);
-
   const [folderName, setFolderName] = useState('전체');
+  const [loading, setLoading] = useState(true);
 
   const { filteredCardList, setUserCardList, setSearchKeyword, userCardList, searchKeyword } = useFilterCard();
 
@@ -58,8 +59,10 @@ const FolderPage = () => {
 
   const fetchFolderLinkList = useCallback(
     async (folderId: string) => {
+      setLoading(true);
       const response = await getFolderLinkList({ folderId: folderId });
       setUserCardList(response?.data);
+      setLoading(false);
     },
     [setUserCardList]
   );
@@ -87,14 +90,16 @@ const FolderPage = () => {
           <SearchInput setSearchKeyword={setSearchKeyword} />
           <div className='flex justify-between items-center mb-6'>
             <SortFolder folderList={userFolderList} folderId={folderId} />
-            <AddFolderButton renderingFolderList={getFolderList} />
+            <AddFolderButton renderingFolderList={fetchFolderList} />
           </div>
           <div className='flex justify-between items-center'>
             <h2 className='text-2xl font-bold'>{folderName}</h2>
-            {!hasEditToolbar && <EditToolbar folderName={folderName} renderingFolderList={getFolderList} />}
+            {!hasEditToolbar && <EditToolbar folderName={folderName} renderingFolderList={fetchFolderList} />}
           </div>
         </div>
-        {hasKeyword.length > 0 ? (
+        {loading ? (
+          <CardSkeleton />
+        ) : hasKeyword.length > 0 ? (
           <div className='grid grid-cols-3 pt-6 gap-x-5 gap-y-6'>
             {hasKeyword.map((card: CardProps) => (
               <Card
