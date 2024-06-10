@@ -14,6 +14,8 @@ import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
 import { userSignup, checkDuplicateEmail } from '@/utils/apis/authApi';
 import { regexr } from '@/utils/regrex';
 import useRedirect from '@/hooks/useRedirect';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 const SignupPage = () => {
   const {
@@ -42,13 +44,21 @@ const SignupPage = () => {
     } catch (error) {}
   };
 
-  const onSubmit = async ({ email, password }: InputItem) => {
-    try {
-      const response = await userSignup({ email: email, password: password });
-      if (response.status === 200) {
+  const signupSubmit = useMutation({
+    mutationFn: ({ email, password }: InputItem) => userSignup({ email, password }),
+    onSuccess: () => {
+      toast.success('회원가입에 성공하였습니다. 로그인 페이지로 이동합니다.');
+      setTimeout(() => {
         route.push('/signin');
-      }
-    } catch (error) {}
+      }, 3000);
+    },
+    onError: (error: any) => {
+      toast.error('회원가입에 실패하였습니다. 정보를 다시 확인해주세요');
+    },
+  });
+
+  const onSubmit = async ({ email, password }: InputItem) => {
+    signupSubmit.mutate({ email, password });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {

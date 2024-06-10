@@ -7,38 +7,64 @@ import Popover from '@/components/common/Popover';
 import DeleteLinkModal from '@/components/common/Modal/DeleteModal';
 import ListModal from '@/components/common/Modal/ListModal';
 import Link from 'next/link';
-import { FolderListItem } from '@/types/folderListType';
+import { FolderListItem } from '@/types/folderType';
 import { useRouter } from 'next/router';
 import CardContent from './CardContent';
-import { CardProps } from '@/types/cardType';
+import { CardItemProps } from '@/types/cardType';
 
 import { createLink, deleteLink } from '@/utils/apis/linkApis';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@/pages/_app';
+import { toast } from 'react-toastify';
 
-interface CardItemProps extends CardProps {
+interface CardProps extends CardItemProps {
   folderList?: FolderListItem[];
-  renderingCardList: (folderId: string) => void;
 }
 
-const Card = ({ id, created_at, description, url, image_source, folderList, renderingCardList }: CardItemProps) => {
-  const [isToggled, handleToggled] = useToggled({ popvoer: false, deleteLinkModal: false, listModal: false });
+const Card = ({ id, created_at, description, url, image_source, folderList }: CardProps) => {
+  const [isToggled, handleToggled] = useToggled({
+    popvoer: false,
+    deleteLinkModal: false,
+    listModal: false,
+  });
 
   const route = useRouter();
   const pagePath = route.asPath.split('/')[1];
   const folderId = route.query.id as string;
 
-  const handleDeleteLink = async () => {
-    const response = await deleteLink({ cardId: id });
-    if (response?.status === 204) {
+  const deleteCardLink = useMutation({
+    mutationFn: (id: number) => deleteLink(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['links'] });
       handleToggled('deleteLinkModal');
-      renderingCardList(folderId);
-    }
+      toast.success('링크가 삭제 되었습니다.');
+    },
+    onError: (error: any) => {
+      const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
+      toast.error(errorMessage);
+    },
+  });
+
+  const createCardLink = useMutation({
+    mutationFn: ({ url, folderId }: { url: string; folderId: string | number }) => createLink({ url, folderId }),
+    onSuccess: () => {
+      toast.success('링크가 추가되었습니다.');
+      queryClient.invalidateQueries({ queryKey: ['links'] });
+      handleToggled('listModal');
+      route.push(folderId);
+    },
+    onError: (error: any) => {
+      const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
+      toast.error(errorMessage);
+    },
+  });
+
+  const handleDeleteLink = async () => {
+    deleteCardLink.mutate(id);
   };
 
-  const handleCreateLink = async () => {
-    const response = await createLink({ url: url, folderId: folderId });
-    if (response?.status === 201) {
-      handleToggled('listModal');
-    }
+  const handleCreateLink = async ({ url, folderId }: { url: string; folderId: string | number }) => {
+    createCardLink.mutate({ url, folderId });
   };
 
   const handleErorrIamge = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -94,7 +120,7 @@ const Card = ({ id, created_at, description, url, image_source, folderList, rend
           content={url}
           handleModal={() => handleToggled('listModal')}
           folderList={folderList}
-          onClick={handleCreateLink}>
+          onClick={(folderId: number) => handleCreateLink({ url: url, folderId: folderId })}>
           추가하기
         </ListModal>
       )}

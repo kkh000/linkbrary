@@ -1,4 +1,4 @@
-export interface CardProps {
+export interface CardItemProps {
   id: number;
   favorite?: boolean;
   created_at: string;

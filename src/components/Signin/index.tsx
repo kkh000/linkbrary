@@ -16,8 +16,8 @@ import { regexr } from '@/utils/regrex';
 import { setAccessToken } from '@/utils/apis/token';
 import { loginStore } from '@/store/store';
 import useRedirect from '@/hooks/useRedirect';
-import instance from '@/utils/apis/axios';
-import { useUserStore } from '@/store/userStore';
+import { useMutation } from '@tanstack/react-query';
+import { Input } from 'postcss';
 
 const SigninPage = () => {
   const {
@@ -33,7 +33,6 @@ const SigninPage = () => {
 
   const route = useRouter();
   const { setIsLoggedIn } = loginStore();
-  const { setUserProfile } = useUserStore();
 
   const isValid = Object.keys(errors).length !== 0;
 
@@ -41,25 +40,26 @@ const SigninPage = () => {
     setFocus('email');
   }, [setFocus]);
 
-  const onSubmit = async ({ email, password }: InputItem) => {
-    try {
-      const response = await userSignin({ email: email, password: password });
-      const accessToken = response?.data.accessToken;
-      if (response?.status === 200) {
+  const signinSubmit = useMutation({
+    mutationFn: ({ email, password }: InputItem) => userSignin({ email, password }),
+    onSuccess: response => {
+      const accessToken = response?.accessToken;
+      if (accessToken) {
         setAccessToken(accessToken);
         setIsLoggedIn(true);
         route.push('/folder/all');
-
-        const userProfileResponse = await instance.get('/users');
-        const userProfileData = userProfileResponse.data[0];
-        setUserProfile(userProfileData);
       }
-    } catch (error: any) {
+    },
+    onError: (error: any) => {
       if (error.response?.status === 400) {
         setError('email', { type: 'manual', message: ERROR_MESSAGE.CHECK_EMAIL });
         setError('password', { type: 'manual', message: ERROR_MESSAGE.CHECK_PASSWORD });
       }
-    }
+    },
+  });
+
+  const onSubmit = async ({ email, password }: InputItem) => {
+    signinSubmit.mutate({ email, password });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {

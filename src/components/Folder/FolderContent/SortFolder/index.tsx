@@ -1,13 +1,13 @@
-import { FolderListItem } from '@/types/folderListType';
+import { FolderListItem } from '@/types/folderType';
 import Link from 'next/link';
 
 interface FolderListProps {
-  folderList: FolderListItem[];
+  folderList: FolderListItem[] | undefined;
   folderId: string;
 }
 
 const SortFolder = ({ folderList, folderId }: FolderListProps) => {
-  const myFolderList = [{ id: 'all', name: '전체' }, ...folderList];
+  const myFolderList = [{ id: 'all', name: '전체' }, ...(folderList ?? [])];
 
   return (
     <div className='flex gap-2'>

@@ -8,14 +8,13 @@ import useClientSide from '@/hooks/useClientSide';
 
 const Navigation = () => {
   const { isLoggedIn } = loginStore();
-  const clientSide = useClientSide();
 
   return (
     <nav className='sticky flex justify-between items-center px-[12.5rem] py-5'>
       <Link href='/'>
         <Image src={LOGO.LINKBRARY_LOGO} alt='linkbrary' width={133} height={24} priority />
       </Link>
-      {clientSide && isLoggedIn ? (
+      {isLoggedIn ? (
         <UserProfile />
       ) : (
         <Link href='/signin'>

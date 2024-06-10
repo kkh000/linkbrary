@@ -1,13 +1,22 @@
 import { useState } from 'react';
-import { CardProps } from '@/types/cardType';
+import { useQuery } from '@tanstack/react-query';
+import { getLinks } from '@/utils/apis/linkApis';
+import { CardItemProps } from '@/types/cardType';
 
-const useFilterCard = () => {
-  const [userCardList, setUserCardList] = useState<CardProps[]>([]);
+const useFilterCard = (folderId: string) => {
+  const { data: cardList } = useQuery({
+    queryKey: ['links', folderId],
+    queryFn: () => getLinks(folderId),
+    enabled: !!folderId,
+  });
+
   const [searchKeyword, setSearchKeyword] = useState('');
 
-  const filteredCardList = userCardList.filter(item => item.title.toLowerCase().includes(searchKeyword.toLowerCase()));
+  const filteredCardList = cardList?.filter((item: CardItemProps) =>
+    item.title.toLowerCase().includes(searchKeyword.toLowerCase())
+  );
 
-  return { filteredCardList, setUserCardList, setSearchKeyword, userCardList, searchKeyword };
+  return { filteredCardList, setSearchKeyword, searchKeyword };
 };
 
 export default useFilterCard;

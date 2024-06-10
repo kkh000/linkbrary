@@ -1,32 +1,38 @@
 import Image from 'next/image';
 import Button from '@/components/common/Button';
 import { ICON } from '@/constants/images';
-import { FolderListItem } from '@/types/folderListType';
+import { FolderListItem } from '@/types/folderType';
 import useToggled from '@/hooks/useToggled';
 import ListModal from '@/components/common/Modal/ListModal';
 import useInput from '@/hooks/useInput';
 import { createLink } from '@/utils/apis/linkApis';
 import { toast } from 'react-toastify';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@/pages/_app';
 
 interface AddFolderInputProps {
-  folderList: FolderListItem[];
-  renderingCardList: (folderId: string) => void;
+  folderList: FolderListItem[] | undefined;
 }
 
-const AddFolderInput = ({ folderList, renderingCardList }: AddFolderInputProps) => {
+const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
   const [isToggled, handleToggled] = useToggled({ listModal: false });
   const { value, onChange } = useInput('');
 
-  const handleCreateLink = async ({ url, folderId }: { url: string; folderId: number }) => {
-    const response = await createLink({ url: url, folderId: folderId });
-    if (response?.status === 201) {
-      handleToggled('listModal');
-      renderingCardList(String(folderId));
+  const createCardLink = useMutation({
+    mutationFn: ({ url, folderId }: { url: string; folderId: string | number }) => createLink({ url, folderId }),
+    onSuccess: () => {
       toast.success('링크가 추가되었습니다.');
-    }
-    if (response && 'message' in response) {
-      toast.error(response?.message);
-    }
+      queryClient.invalidateQueries({ queryKey: ['links'] });
+      handleToggled('listModal');
+    },
+    onError: (error: any) => {
+      const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
+      toast.error(errorMessage);
+    },
+  });
+
+  const handleCreateLink = async ({ url, folderId }: { url: string; folderId: string | number }) => {
+    createCardLink.mutate({ url, folderId });
   };
 
   return (

@@ -3,8 +3,7 @@ import Image from 'next/image';
 import { ICON } from '@/constants/images';
 import ModalLayout from '..';
 import Button from '../../Button';
-import { FolderListItem } from '@/types/folderListType';
-
+import { FolderListItem } from '@/types/folderType';
 import useSelect from '@/hooks/useSelect';
 
 interface ModalProps {

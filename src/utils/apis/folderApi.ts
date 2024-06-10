@@ -1,58 +1,32 @@
+import { FolderInformationItem, FolderListItem } from '@/types/folderType';
 import instance from './axios';
-import axios from 'axios';
 
-export const getFolderList = async () => {
-  try {
-    const response = await instance.get('/folders');
-    return response;
-  } catch (error) {}
+export const getFolderList = async (): Promise<FolderListItem[] | undefined> => {
+  const response = await instance.get('/folders');
+  return response.data;
 };
 
-export const getFolderInformation = async ({ folderId }: { folderId: string }) => {
-  try {
-    const response = await instance.get(`/folders/${folderId}`);
-    return response;
-  } catch (error) {}
+export const getFolderInformation = async (folderId: string): Promise<FolderInformationItem[]> => {
+  const response = await instance.get(`/folders/${folderId}`);
+  return response.data;
 };
 
-export const changeFolderName = async ({ newFolderName, folderId }: { newFolderName: string; folderId: string }) => {
-  try {
-    const response = await instance.put(`/folders/${folderId}`, { name: newFolderName });
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return {
-        status: error.response.status,
-        message: error.response.data.message,
-      };
-    }
-  }
+export const changeFolderName = async (newFolderName: string, folderId: string) => {
+  const response = await instance.put(`/folders/${folderId}`, { name: newFolderName });
+  return response.data;
 };
 
-export const createFolder = async ({ name }: { name: string }) => {
-  try {
-    const response = await instance.post('/folders', { name });
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return {
-        status: error.response.status,
-        message: error.response.data.message,
-      };
-    }
-  }
+export const createFolder = async (name: string) => {
+  const response = await instance.post('/folders', { name });
+  return response.data;
 };
 
-export const deleteFolder = async ({ folderId }: { folderId: string }) => {
-  try {
-    const response = await instance.delete(`/folders/${folderId}`);
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return {
-        status: error.response.status,
-        message: error.response.data.message,
-      };
-    }
-  }
+export const deleteFolder = async (folderId: string) => {
+  const response = await instance.delete(`/folders/${folderId}`);
+  return response.data;
+};
+
+export const getUserData = async () => {
+  const response = await instance.get('/users');
+  return response.data;
 };

@@ -1,36 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
-import { useUserStore } from '@/store/userStore';
-import { getFolderInformation } from '@/utils/apis/folderApi';
 
-import { useEffect, useState } from 'react';
+import { getFolderInformation, getUserData } from '@/utils/apis/folderApi';
+import { useQuery } from '@tanstack/react-query';
 
 interface FodlerProfileProps {
   folderId: string;
 }
 
 const FolderProfile = ({ folderId }: FodlerProfileProps) => {
-  const [folderInformation, setFolderInformation] = useState({ name: '', user_id: 0 });
+  const { data: folderInformation } = useQuery({
+    queryKey: ['folderName', folderId],
+    queryFn: () => getFolderInformation(folderId),
+    enabled: !!folderId && folderId !== 'all',
+  });
 
-  const userProfile = useUserStore(state => state.userProfile);
+  const { data: userData } = useQuery({ queryKey: ['user'], queryFn: getUserData });
 
-  const fetchFolderInforamtion = async (folderId: string) => {
-    const response = await getFolderInformation({ folderId: folderId });
-    const folderInformation = response?.data[0];
-    setFolderInformation(folderInformation);
-  };
-
-  useEffect(() => {
-    const hasFolderId = folderId !== undefined;
-    if (hasFolderId) {
-      fetchFolderInforamtion(folderId);
-    }
-  }, [folderId]);
+  const folderName = folderId === 'all' ? '전체' : folderInformation?.[0]?.name || '';
 
   return (
     <header className='flex flex-col justify-center items-center pt-5 pb-[3.75rem]'>
-      <img src={userProfile?.image_source} alt='image' width={60} height={60} />
-      <div className='pt-3 pb-5'>{userProfile?.email}</div>
-      <div className='text-4xl font-semibold'>{folderInformation.name}</div>
+      <img src={userData[0].image_source} alt='image' width={60} height={60} />
+      <div className='pt-3 pb-5'>{userData[0].email}</div>
+      <div className='text-4xl font-semibold'>{folderName}</div>
     </header>
   );
 };
