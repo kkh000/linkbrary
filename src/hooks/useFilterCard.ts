@@ -4,7 +4,7 @@ import { getLinks } from '@/utils/apis/linkApis';
 import { CardItemProps } from '@/types/cardType';
 
 const useFilterCard = (folderId: string) => {
-  const { data: cardList } = useQuery({
+  const { data: cardList, isLoading } = useQuery({
     queryKey: ['links', folderId],
     queryFn: () => getLinks(folderId),
     enabled: !!folderId,
@@ -16,7 +16,7 @@ const useFilterCard = (folderId: string) => {
     item.title.toLowerCase().includes(searchKeyword.toLowerCase())
   );
 
-  return { filteredCardList, setSearchKeyword, searchKeyword };
+  return { filteredCardList, setSearchKeyword, searchKeyword, isLoading };
 };
 
 export default useFilterCard;

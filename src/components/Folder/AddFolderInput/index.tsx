@@ -9,6 +9,7 @@ import { createLink } from '@/utils/apis/linkApis';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@/pages/_app';
+import Spinner from '@/components/common/Spinner/indext';
 
 interface AddFolderInputProps {
   folderList: FolderListItem[] | undefined;
@@ -22,7 +23,10 @@ const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
     mutationFn: ({ url, folderId }: { url: string; folderId: string | number }) => createLink({ url, folderId }),
     onSuccess: () => {
       toast.success('링크가 추가되었습니다.');
-      queryClient.invalidateQueries({ queryKey: ['links'] });
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['links'] });
+      }, 1000);
+
       handleToggled('listModal');
     },
     onError: (error: any) => {
@@ -30,6 +34,10 @@ const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
       toast.error(errorMessage);
     },
   });
+
+  if (createCardLink.isPending) {
+    return <Spinner />;
+  }
 
   const handleCreateLink = async ({ url, folderId }: { url: string; folderId: string | number }) => {
     createCardLink.mutate({ url, folderId });

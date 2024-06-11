@@ -23,7 +23,7 @@ export const userSignup = async ({ email, password }: SignProps) => {
   return response.data;
 };
 
-export const checkDuplicateEmail = async ({ email }: { email: string }) => {
+export const checkDuplicateEmail = async (email: string | undefined) => {
   const response = await instance.post('/users/check-email', {
     email: email,
   });

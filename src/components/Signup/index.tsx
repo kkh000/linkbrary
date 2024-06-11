@@ -37,11 +37,21 @@ const SignupPage = () => {
     setFocus('email');
   }, [setFocus]);
 
-  const checkEmail = async (email: string) => {
+  const checkDuplicate = useMutation({
+    mutationFn: (email: string | undefined) => checkDuplicateEmail(email),
+    onSuccess: () => {
+      toast.success('사용 가능한 이메일 입니다.');
+    },
+  });
+
+  const handleDuplicate = async (email: string | undefined) => {
+    if (!email) return ERROR_MESSAGE.EMPTY_EMAIL;
     try {
-      const response = await checkDuplicateEmail({ email: email });
-      return response.status !== 409;
-    } catch (error) {}
+      await checkDuplicate.mutateAsync(email);
+      return true;
+    } catch {
+      return ERROR_MESSAGE.DUPLICATE_EMAIL;
+    }
   };
 
   const signupSubmit = useMutation({
@@ -81,10 +91,7 @@ const SignupPage = () => {
             value: regexr.email,
             message: ERROR_MESSAGE.INVALID_EMAIL_FORMAT,
           },
-          validate: async value => {
-            const isDuplicate = await checkEmail(value as string);
-            return isDuplicate || ERROR_MESSAGE.DUPLICATE_EMAIL;
-          },
+          validate: handleDuplicate,
         })}
         id='eamil'
         title='이메일'

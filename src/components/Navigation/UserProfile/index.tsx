@@ -35,13 +35,13 @@ const UserProfile = () => {
   };
 
   return (
-    <div className='relative flex items-center gap-[.375rem]' onClick={() => handleToggled('popover')}>
+    <button className='relative flex items-center gap-[.375rem]' onClick={() => handleToggled('popover')}>
       {loading ? (
         <Spinner />
       ) : (
         <>
-          <img className='w-7 h-7 rounded-full' src={userData[0].image_source} alt='profile' />
-          <div className='text-sm'>{userData[0].name}</div>
+          <img className='w-7 h-7 rounded-full' src={userData?.[0]?.image_source} alt='profile' />
+          <div className='text-sm'>{userData?.[0]?.name}</div>
         </>
       )}
       {isToggled.popover && (
@@ -54,7 +54,7 @@ const UserProfile = () => {
           closePopover={() => handleToggled('popover')}
         />
       )}
-    </div>
+    </button>
   );
 };
 export default UserProfile;

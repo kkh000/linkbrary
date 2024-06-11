@@ -14,6 +14,7 @@ import { getFolderInformation } from '@/utils/apis/folderApi';
 import { useQuery } from '@tanstack/react-query';
 import CardGrid from './CardGrid';
 import useFilterCard from '@/hooks/useFilterCard';
+import CardSkeleton from '@/components/common/Skeleton/CardSkeleton';
 
 interface FolderCotentProps {
   folderList: FolderListItem[] | undefined;
@@ -23,7 +24,7 @@ const FolderContent = ({ folderList }: FolderCotentProps) => {
   const route = useRouter();
   const folderId = route.query.id as string;
 
-  const { filteredCardList, setSearchKeyword, searchKeyword } = useFilterCard(folderId);
+  const { filteredCardList, setSearchKeyword, searchKeyword, isLoading: cardListLoading } = useFilterCard(folderId);
 
   const { data: folderInformation } = useQuery({
     queryKey: ['folderName', folderId],
@@ -47,7 +48,9 @@ const FolderContent = ({ folderList }: FolderCotentProps) => {
           {!hasEditToolbar && <EditToolbar folderName={folderName} folderId={folderId} />}
         </div>
       </div>
-      {filteredCardList?.length > 0 ? (
+      {cardListLoading ? (
+        <CardSkeleton />
+      ) : filteredCardList?.length > 0 ? (
         <CardGrid cardList={filteredCardList} folderList={folderList} />
       ) : (
         <EmptyContent message={searchKeyword === '' ? MESSAGE.EMPTY_CARD : MESSAGE.EMPTY_KEYWORD} />
