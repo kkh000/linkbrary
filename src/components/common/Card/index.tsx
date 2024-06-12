@@ -67,7 +67,7 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
     createCardLink.mutate({ url, folderId });
   };
 
-  const handleErorrIamge = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const handleErrorImage = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
     (event.target as HTMLImageElement).src = IMAGE.NO_IMAGE;
   };
 
@@ -75,14 +75,16 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
   const cardImage = image_source === null ? IMAGE.NO_IMAGE : image_source;
 
   return (
-    <div key={id} className='relative'>
+    <div key={id} className='relative group'>
       <Link className='flex flex-col w-[21.25rem] h-[20.875rem] shadow-md rounded-2xl' href={url} target='_blank'>
-        <img
-          className='object-cover rounded-t-2xl w-[21.25rem] h-[17.5rem] overflow-hidden z-1'
-          src={cardImage}
-          onError={handleErorrIamge}
-          alt='none'
-        />
+        <div className='relative overflow-hidden rounded-t-2xl w-[21.25rem] h-[17.5rem] z-1'>
+          <img
+            className='object-cover w-full h-full transition-transform duration-300 ease-in-out transform group-hover:scale-130'
+            src={cardImage}
+            onError={handleErrorImage}
+            alt='none'
+          />
+        </div>
         <CardContent
           createdAt={created_at}
           description={description}

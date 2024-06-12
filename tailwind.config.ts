@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      scale: {
+        '130': '1.3',
+      },
       colors: {
         primary: '#6D6AFE',
         red: '#FF5B56',
@@ -19,6 +22,11 @@ const config: Config = {
         gray60: '#9FA6B2',
         gray100: '#3E3E43',
       },
+    },
+  },
+  variants: {
+    extend: {
+      transform: ['hover'],
     },
   },
   plugins: [],

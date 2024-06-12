@@ -5,6 +5,7 @@ import ModalLayout from '..';
 import Button from '../../Button';
 import { FolderListItem } from '@/types/folderType';
 import useSelect from '@/hooks/useSelect';
+import Spinner from '../../Spinner/indext';
 
 interface ModalProps {
   handleModal: () => void;

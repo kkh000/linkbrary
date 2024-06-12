@@ -27,6 +27,7 @@ const EditToolbar = ({ folderName, folderId }: EditToolbarProps) => {
       toast.success('폴더 이름이 변경되었습니다.');
       handleToggled('changeNameModal');
       queryClient.invalidateQueries({ queryKey: ['folderList'] });
+      queryClient.invalidateQueries({ queryKey: ['folderName'] });
     },
     onError: (error: any) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';

@@ -21,7 +21,7 @@ const CardContent = ({ createdAt, description, pagePath, handleToggled }: CardCo
   const onlyFolderPage = pagePath !== 'share';
 
   return (
-    <div className='flex flex-col justify-between gap-[.625rem] px-5 py-[.9375rem] hover:bg-gray10'>
+    <div className='flex flex-col justify-between gap-[.625rem] px-5 py-[.9375rem] group-hover:bg-gray10'>
       <div className='relative flex justify-between'>
         <div className='text-gray60 text-sm'>{createDuration}</div>
         <button className='hover:bg-gray20 hover:opacity-50 p-1 hover:rounded-full ' onClick={handleTogglePopover}>

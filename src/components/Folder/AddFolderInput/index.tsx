@@ -17,7 +17,7 @@ interface AddFolderInputProps {
 
 const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
   const [isToggled, handleToggled] = useToggled({ listModal: false });
-  const { value, onChange } = useInput('');
+  const { value, onChange, reset } = useInput('');
 
   const createCardLink = useMutation({
     mutationFn: ({ url, folderId }: { url: string; folderId: string | number }) => createLink({ url, folderId }),
@@ -26,6 +26,7 @@ const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: ['links'] });
       }, 1000);
+      reset();
 
       handleToggled('listModal');
     },
