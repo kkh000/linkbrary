@@ -3,7 +3,7 @@ interface EmptyContentProps {
 }
 
 const EmptyContent = ({ message }: EmptyContentProps) => {
-  return <div className=' py-[7rem] text-2xl font-bold '>{message}</div>;
+  return <p className=' py-[7rem] text-2xl font-bold '>{message}</p>;
 };
 
 export default EmptyContent;

@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import { getAccessToken, setAccessToken, removeAccessToken } from './token';
+import axios from 'axios';
+import { getCookie, setCookie, removeCookie } from './cookie';
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -10,7 +10,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    const token = getAccessToken();
+    const token = getCookie('accessToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -32,11 +32,14 @@ instance.interceptors.response.use(
           { withCredentials: true }
         );
         const newAccessToken = refreshResponse.data.accessToken;
-        setAccessToken(newAccessToken);
+        setCookie('accessToken', newAccessToken, {
+          path: '/',
+          secure: true,
+        });
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
         return axios(originalRequest);
       } catch (refreshError) {
-        removeAccessToken();
+        removeCookie('accessToken');
         window.location.href = '/signin';
         return Promise.reject(refreshError);
       }

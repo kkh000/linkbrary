@@ -72,13 +72,14 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
   };
 
   const onlyFolderPage = pagePath !== 'share';
+  const cardImage = image_source === null ? IMAGE.NO_IMAGE : image_source;
 
   return (
     <div key={id} className='relative'>
       <Link className='flex flex-col w-[21.25rem] h-[20.875rem] shadow-md rounded-2xl' href={url} target='_blank'>
         <img
-          className='object-cover rounded-t-2xl w-[21.25rem] h-[17.5rem] overflow-hidden'
-          src={image_source === null ? IMAGE.NO_IMAGE : image_source}
+          className='object-cover rounded-t-2xl w-[21.25rem] h-[17.5rem] overflow-hidden z-1'
+          src={cardImage}
           onError={handleErorrIamge}
           alt='none'
         />

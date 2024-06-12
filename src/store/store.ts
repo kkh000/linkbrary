@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getAccessToken, removeAccessToken } from '@/utils/apis/token';
+import { getCookie, removeCookie } from '@/utils/apis/cookie';
 
 interface StoreState {
   isLoggedIn: boolean;
@@ -8,7 +8,7 @@ interface StoreState {
 }
 
 const getInitialLoginState = () => {
-  const token = getAccessToken();
+  const token = getCookie('accessToken');
   return !!token;
 };
 
@@ -16,12 +16,12 @@ export const loginStore = create<StoreState>(set => ({
   isLoggedIn: getInitialLoginState(),
   setIsLoggedIn: state => {
     if (!state) {
-      removeAccessToken();
+      removeCookie('accessToken');
     }
     set({ isLoggedIn: state });
   },
   checkLoginStatus: () => {
-    const token = getAccessToken();
+    const token = getCookie('accessToken');
     set({ isLoggedIn: !!token });
   },
 }));

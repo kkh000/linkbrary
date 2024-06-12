@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import useToggled from '@/hooks/useToggled';
 import Popover from '@/components/common/Popover';
-import { removeAccessToken } from '@/utils/apis/token';
+import { removeCookie } from '@/utils/apis/cookie';
 import { loginStore } from '@/store/store';
 import { useRouter } from 'next/router';
 
@@ -28,7 +28,7 @@ const UserProfile = () => {
 
     setTimeout(() => {
       setIsLoggedIn(false);
-      removeAccessToken();
+      removeCookie('accessToken');
       route.push('/');
       setLoading(false);
     }, 3000);

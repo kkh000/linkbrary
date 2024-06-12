@@ -57,11 +57,11 @@ const EditToolbar = ({ folderName, folderId }: EditToolbarProps) => {
 
   return (
     <div className='flex gap-3'>
-      <div className='flex gap-1' onClick={() => route.push(`/share/${folderId}`)}>
+      <div className='flex gap-1 cursor-pointer' onClick={() => route.push(`/share/${folderId}`)}>
         <Image src={ICON.SHARE} alt='share' width={18} height={18} />
         <div className='text-sm text-gray60 font-semibold hover:text-black'>공유</div>
       </div>
-      <div className='flex gap-1' onClick={() => handleToggled('changeNameModal')}>
+      <div className='flex gap-1 cursor-pointer' onClick={() => handleToggled('changeNameModal')}>
         <Image src={ICON.CHANGE} alt='change' width={18} height={18} />
         <div className='text-sm text-gray60 font-semibold hover:text-black'>이름 변경</div>
       </div>
@@ -74,7 +74,7 @@ const EditToolbar = ({ folderName, folderId }: EditToolbarProps) => {
           변경하기
         </ChangeNameModal>
       )}
-      <div className='flex gap-1' onClick={() => handleToggled('deleteFolderModal')}>
+      <div className='flex gap-1 cursor-pointer' onClick={() => handleToggled('deleteFolderModal')}>
         <Image src={ICON.DELETE} alt='share' width={18} height={18} />
         <div className='text-sm text-gray60 font-semibold hover:text-black'>삭제</div>
       </div>

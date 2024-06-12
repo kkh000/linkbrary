@@ -13,11 +13,10 @@ import { InputItem } from '@/types/inputType';
 import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
 import { userSignin } from '@/utils/apis/authApi';
 import { regexr } from '@/utils/regrex';
-import { setAccessToken } from '@/utils/apis/token';
 import { loginStore } from '@/store/store';
 import useRedirect from '@/hooks/useRedirect';
 import { useMutation } from '@tanstack/react-query';
-import { Input } from 'postcss';
+import { setCookie } from '@/utils/apis/cookie';
 
 const SigninPage = () => {
   const {
@@ -45,7 +44,10 @@ const SigninPage = () => {
     onSuccess: response => {
       const accessToken = response?.accessToken;
       if (accessToken) {
-        setAccessToken(accessToken);
+        setCookie('accessToken', accessToken, {
+          path: '/',
+          secure: true,
+        });
         setIsLoggedIn(true);
         route.push('/folder/all');
       }

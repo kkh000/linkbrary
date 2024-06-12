@@ -7,6 +7,7 @@ export const ERROR_MESSAGE = {
   DUPLICATE_EMAIL: '이미 사용중인 이메일 입니다',
   CHECK_EMAIL: '이메일을 확인해 주세요',
   CHECK_PASSWORD: '비밀번호를 확인해 주세요',
+  UNKNOWN_ERROR: '에러가 발생했습니다.',
 };
 
 export const PLACEHOLDER = {
