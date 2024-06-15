@@ -1,5 +1,4 @@
 import usePortal from '@/hooks/usePortal';
-import { createPortal } from 'react-dom';
 
 const Spinner = () => {
   const createPortal = usePortal('spinner');

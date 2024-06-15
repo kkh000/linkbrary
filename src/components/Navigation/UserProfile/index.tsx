@@ -2,7 +2,7 @@
 import useToggled from '@/hooks/useToggled';
 import Popover from '@/components/common/Popover';
 import { removeCookie } from '@/utils/apis/cookie';
-import { loginStore } from '@/store/store';
+import loginStore from '@/store/loginStore';
 import { useRouter } from 'next/router';
 
 import { toast } from 'react-toastify';

@@ -13,7 +13,7 @@ import { InputItem } from '@/types/inputType';
 import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
 import { userSignin } from '@/utils/apis/authApi';
 import { regexr } from '@/utils/regrex';
-import { loginStore } from '@/store/store';
+import loginStore from '@/store/loginStore';
 import useRedirect from '@/hooks/useRedirect';
 import { useMutation } from '@tanstack/react-query';
 import { setCookie } from '@/utils/apis/cookie';

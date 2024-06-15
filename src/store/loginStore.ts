@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { getCookie, removeCookie } from '@/utils/apis/cookie';
 
-interface StoreState {
+interface LoginStore {
   isLoggedIn: boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   checkLoginStatus: () => void;
@@ -12,7 +12,7 @@ const getInitialLoginState = () => {
   return !!token;
 };
 
-export const loginStore = create<StoreState>(set => ({
+const loginStore = create<LoginStore>(set => ({
   isLoggedIn: getInitialLoginState(),
   setIsLoggedIn: state => {
     if (!state) {
@@ -25,3 +25,5 @@ export const loginStore = create<StoreState>(set => ({
     set({ isLoggedIn: !!token });
   },
 }));
+
+export default loginStore;

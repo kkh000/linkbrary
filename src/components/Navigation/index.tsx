@@ -1,4 +1,4 @@
-import { loginStore } from '@/store/store';
+import loginStore from '@/store/loginStore';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '../common/Button';
