@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import { ICON, IMAGE } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
@@ -70,18 +71,17 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
   };
 
   const onlyFolderPage = pagePath !== 'share';
-  const cardImage = image_source || IMAGE.NO_IMAGE;
+  const cardImage = image_source === null ? IMAGE.NO_IMAGE : image_source;
 
   return (
     <div key={id} className='relative group'>
       <Link className='flex flex-col w-[21.25rem] h-[20.875rem] shadow-md rounded-2xl' href={url} target='_blank'>
         <div className='relative overflow-hidden rounded-t-2xl w-[21.25rem] h-[17.5rem] z-1'>
-          <Image
+          <img
             className='object-cover w-full h-full transition-transform duration-300 ease-in-out transform group-hover:scale-130'
             src={cardImage}
             onError={handleErrorImage}
             alt='none'
-            layout='fill'
           />
         </div>
         <CardContent
