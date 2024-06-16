@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 import Image from 'next/image';
 import { ICON, IMAGE } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
@@ -28,9 +26,9 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
     listModal: false,
   });
 
-  const route = useRouter();
-  const pagePath = route.asPath.split('/')[1];
-  const folderId = route.query.id as string;
+  const router = useRouter();
+  const pagePath = router.asPath.split('/')[1];
+  const folderId = router.query.id as string | undefined;
 
   const deleteCardLink = useMutation({
     mutationFn: (id: number) => deleteLink(id),
@@ -51,7 +49,7 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
       toast.success('링크가 추가되었습니다.');
       queryClient.invalidateQueries({ queryKey: ['links'] });
       handleToggled('listModal');
-      route.push(folderId);
+      if (folderId) router.push(folderId.toString());
     },
     onError: (error: any) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
@@ -72,17 +70,18 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
   };
 
   const onlyFolderPage = pagePath !== 'share';
-  const cardImage = image_source === null ? IMAGE.NO_IMAGE : image_source;
+  const cardImage = image_source || IMAGE.NO_IMAGE;
 
   return (
     <div key={id} className='relative group'>
       <Link className='flex flex-col w-[21.25rem] h-[20.875rem] shadow-md rounded-2xl' href={url} target='_blank'>
         <div className='relative overflow-hidden rounded-t-2xl w-[21.25rem] h-[17.5rem] z-1'>
-          <img
+          <Image
             className='object-cover w-full h-full transition-transform duration-300 ease-in-out transform group-hover:scale-130'
             src={cardImage}
             onError={handleErrorImage}
             alt='none'
+            layout='fill'
           />
         </div>
         <CardContent
