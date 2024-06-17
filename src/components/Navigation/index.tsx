@@ -15,7 +15,7 @@ const Navigation = () => {
   const isClient = useClientSide();
 
   return (
-    <nav className='sticky flex justify-between items-center px-[12.5rem] py-5'>
+    <nav className='sticky top-0 flex items-center justify-between bg-[#f0f6ff] px-[12.5rem] py-5'>
       <Link href='/'>
         <Image src={LOGO.LINKBRARY_LOGO} alt='linkbrary' width={133} height={24} priority />
       </Link>
