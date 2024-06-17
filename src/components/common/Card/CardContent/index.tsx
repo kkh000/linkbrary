@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import convertDuration from '@/utils/convertDuration';
-import convertDate from '@/utils/convertDate';
+
 import { ICON } from '@/constants/images';
+import convertDate from '@/utils/convertDate';
+import convertDuration from '@/utils/convertDuration';
 
 interface CardContentProps {
   createdAt: string;

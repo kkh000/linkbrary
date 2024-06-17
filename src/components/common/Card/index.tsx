@@ -1,20 +1,22 @@
-/* eslint-disable @next/next/no-img-element */
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import Image from 'next/image';
-import { ICON, IMAGE } from '@/constants/images';
-import useToggled from '@/hooks/useToggled';
-import Popover from '@/components/common/Popover';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
 import DeleteLinkModal from '@/components/common/Modal/DeleteModal';
 import ListModal from '@/components/common/Modal/ListModal';
-import Link from 'next/link';
-import { FolderListItem } from '@/types/folderType';
-import { useRouter } from 'next/router';
-import CardContent from './CardContent';
-import { CardItemProps } from '@/types/cardType';
-
-import { createLink, deleteLink } from '@/utils/apis/linkApis';
-import { useMutation } from '@tanstack/react-query';
+import Popover from '@/components/common/Popover';
+import { ICON, IMAGE } from '@/constants/images';
+import useToggled from '@/hooks/useToggled';
 import { queryClient } from '@/pages/_app';
-import { toast } from 'react-toastify';
+import { CardItemProps } from '@/types/cardType';
+import { ErrorResponse } from '@/types/commonType';
+import { FolderListItem } from '@/types/folderType';
+import { createLink, deleteLink } from '@/utils/apis/linkApis';
+
+import CardContent from './CardContent';
 
 interface CardProps extends CardItemProps {
   folderList?: FolderListItem[];
@@ -38,7 +40,7 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
       handleToggled('deleteLinkModal');
       toast.success('링크가 삭제 되었습니다.');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
       toast.error(errorMessage);
     },
@@ -52,7 +54,7 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
       handleToggled('listModal');
       if (folderId) router.push(folderId.toString());
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
       toast.error(errorMessage);
     },

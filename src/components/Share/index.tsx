@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
-import FolderProfile from './FolderProfile';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
 import useRedirect from '@/hooks/useRedirect';
+
+import FolderProfile from './FolderProfile';
 import ShareContent from './ShareContent';
 
 const SharePage = () => {

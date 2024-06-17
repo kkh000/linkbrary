@@ -1,10 +1,6 @@
 import { useState } from 'react';
 
-interface ToggleStates {
-  [key: number]: boolean;
-}
-
-const useSelect = (initialState: ToggleStates) => {
+const useSelect = () => {
   const [selectItem, setSelectItem] = useState<number | null>(null);
 
   const handleSelectItem = (itemId: number) => {

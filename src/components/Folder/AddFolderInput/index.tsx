@@ -1,15 +1,18 @@
-import Image from 'next/image';
-import Button from '@/components/common/Button';
-import { ICON } from '@/constants/images';
-import { FolderListItem } from '@/types/folderType';
-import useToggled from '@/hooks/useToggled';
-import ListModal from '@/components/common/Modal/ListModal';
-import useInput from '@/hooks/useInput';
-import { createLink } from '@/utils/apis/linkApis';
-import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '@/pages/_app';
+import { AxiosError } from 'axios';
+import Image from 'next/image';
+import { toast } from 'react-toastify';
+
+import Button from '@/components/common/Button';
+import ListModal from '@/components/common/Modal/ListModal';
 import Spinner from '@/components/common/Spinner/indext';
+import { ICON } from '@/constants/images';
+import useInput from '@/hooks/useInput';
+import useToggled from '@/hooks/useToggled';
+import { queryClient } from '@/pages/_app';
+import { ErrorResponse } from '@/types/commonType';
+import { FolderListItem } from '@/types/folderType';
+import { createLink } from '@/utils/apis/linkApis';
 
 interface AddFolderInputProps {
   folderList: FolderListItem[] | undefined;
@@ -30,7 +33,7 @@ const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
 
       handleToggled('listModal');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
       toast.error(errorMessage);
     },

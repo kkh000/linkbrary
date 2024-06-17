@@ -1,9 +1,10 @@
 import Image from 'next/image';
 
 import { ICON } from '@/constants/images';
+import useInput from '@/hooks/useInput';
+
 import ModalLayout from '..';
 import Button from '../../Button';
-import useInput from '@/hooks/useInput';
 
 interface ModalProps {
   handleModal: () => void;

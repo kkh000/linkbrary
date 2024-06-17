@@ -1,6 +1,14 @@
-import { useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { FieldError, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+
+import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
+import useRedirect from '@/hooks/useRedirect';
+import { InputItem } from '@/types/inputType';
+import { userSignup, checkDuplicateEmail } from '@/utils/apis/authApi';
+import { regexr } from '@/utils/regrex';
 
 import Button from '../common/Button';
 import EmailInput from '../common/Form/FormInput';
@@ -8,14 +16,6 @@ import PasswordInput from '../common/Form/FormInput';
 import PasswordCheckInput from '../common/Form/FormInput';
 import FormTitle from '../common/Form/FormTitle';
 import SocialLogin from '../common/Form/SocialLogin';
-
-import { InputItem } from '@/types/inputType';
-import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
-import { userSignup, checkDuplicateEmail } from '@/utils/apis/authApi';
-import { regexr } from '@/utils/regrex';
-import useRedirect from '@/hooks/useRedirect';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 
 const SignupPage = () => {
   const {
@@ -62,7 +62,7 @@ const SignupPage = () => {
         route.push('/signin');
       }, 3000);
     },
-    onError: (error: any) => {
+    onError: () => {
       toast.error('회원가입에 실패하였습니다. 정보를 다시 확인해주세요');
     },
   });

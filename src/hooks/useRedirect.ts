@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
 import loginStore from '@/store/loginStore';
 
 const useRedirect = (path: string, requireLogin: boolean) => {

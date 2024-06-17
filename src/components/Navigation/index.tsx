@@ -1,10 +1,13 @@
-import loginStore from '@/store/loginStore';
-import Link from 'next/link';
 import Image from 'next/image';
-import Button from '../common/Button';
-import UserProfile from './UserProfile';
+import Link from 'next/link';
+
 import { LOGO } from '@/constants/images';
 import useClientSide from '@/hooks/useClientSide';
+import loginStore from '@/store/loginStore';
+
+import Button from '../common/Button';
+
+import UserProfile from './UserProfile';
 
 const Navigation = () => {
   const { isLoggedIn } = loginStore();

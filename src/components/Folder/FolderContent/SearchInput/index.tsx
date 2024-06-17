@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import { useRef, useState } from 'react';
 
 import { ICON } from '@/constants/images';
-import { useRef, useState } from 'react';
 import useAutoFocus from '@/hooks/useAutoFocus';
 
 interface SearchInputProps {

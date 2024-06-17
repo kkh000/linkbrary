@@ -1,22 +1,23 @@
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-
 import { FieldError, useForm } from 'react-hook-form';
+
+import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
+import useRedirect from '@/hooks/useRedirect';
+import loginStore from '@/store/loginStore';
+import { ErrorResponse } from '@/types/commonType';
+import { InputItem } from '@/types/inputType';
+import { userSignin } from '@/utils/apis/authApi';
+import { setCookie } from '@/utils/apis/cookie';
+import { regexr } from '@/utils/regrex';
 
 import Button from '../common/Button';
 import EmailInput from '../common/Form/FormInput';
 import PasswordInput from '../common/Form/FormInput';
 import FormTitle from '../common/Form/FormTitle';
 import SocialLogin from '../common/Form/SocialLogin';
-
-import { InputItem } from '@/types/inputType';
-import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
-import { userSignin } from '@/utils/apis/authApi';
-import { regexr } from '@/utils/regrex';
-import loginStore from '@/store/loginStore';
-import useRedirect from '@/hooks/useRedirect';
-import { useMutation } from '@tanstack/react-query';
-import { setCookie } from '@/utils/apis/cookie';
 
 const SigninPage = () => {
   const {
@@ -52,7 +53,7 @@ const SigninPage = () => {
         route.push('/folder/all');
       }
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       if (error.response?.status === 400) {
         setError('email', { type: 'manual', message: ERROR_MESSAGE.CHECK_EMAIL });
         setError('password', { type: 'manual', message: ERROR_MESSAGE.CHECK_PASSWORD });

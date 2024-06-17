@@ -1,9 +1,10 @@
 import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
-import type { AppProps } from 'next/app';
-import { ToastContainer } from 'react-toastify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CookiesProvider } from 'react-cookie';
+import { ToastContainer } from 'react-toastify';
+
+import type { AppProps } from 'next/app';
 
 export const queryClient = new QueryClient({});
 
