@@ -1,4 +1,5 @@
 import { FolderInformationItem, FolderListItem } from '@/types/folderType';
+
 import instance from './axios';
 
 export const getFolderList = async (): Promise<FolderListItem[] | undefined> => {

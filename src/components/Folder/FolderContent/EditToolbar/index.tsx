@@ -1,14 +1,16 @@
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
+import DeleteFolderModal from '@/components/common/Modal/DeleteModal';
+import ChangeNameModal from '@/components/common/Modal/InputModal';
 import { ICON } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
-import ChangeNameModal from '@/components/common/Modal/InputModal';
-import DeleteFolderModal from '@/components/common/Modal/DeleteModal';
-import Image from 'next/image';
-
-import { changeFolderName, deleteFolder } from '@/utils/apis/folderApi';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
-import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@/pages/_app';
+import { ErrorResponse } from '@/types/commonType';
+import { changeFolderName, deleteFolder } from '@/utils/apis/folderApi';
 
 interface EditToolbarProps {
   folderName: string | undefined;
@@ -29,7 +31,7 @@ const EditToolbar = ({ folderName, folderId }: EditToolbarProps) => {
       queryClient.invalidateQueries({ queryKey: ['folderList'] });
       queryClient.invalidateQueries({ queryKey: ['folderName'] });
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
       toast.error(errorMessage);
     },
@@ -43,7 +45,7 @@ const EditToolbar = ({ folderName, folderId }: EditToolbarProps) => {
       queryClient.invalidateQueries({ queryKey: ['folderList'] });
       route.push('/folder/all');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
       toast.error(errorMessage);
     },

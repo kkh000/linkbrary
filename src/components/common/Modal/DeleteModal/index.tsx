@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { ICON } from '@/constants/images';
+
 import ModalLayout from '..';
 import Button from '../../Button';
 

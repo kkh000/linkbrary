@@ -1,13 +1,14 @@
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import Image from 'next/image';
+import { ToastContainer, toast } from 'react-toastify';
 
+import AddFolderModal from '@/components/common/Modal/InputModal';
 import { ICON } from '@/constants/images';
 import useToggled from '@/hooks/useToggled';
-import AddFolderModal from '@/components/common/Modal/InputModal';
-
-import { createFolder } from '@/utils/apis/folderApi';
-import { ToastContainer, toast } from 'react-toastify';
-import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@/pages/_app';
+import { ErrorResponse } from '@/types/commonType';
+import { createFolder } from '@/utils/apis/folderApi';
 
 const AddFolderButton = () => {
   const [isToggled, handleToggled] = useToggled({ addFolderModal: false });
@@ -19,7 +20,7 @@ const AddFolderButton = () => {
       queryClient.invalidateQueries({ queryKey: ['folderList'] });
       handleToggled('addFolderModal');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ErrorResponse>) => {
       const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
       toast.error(errorMessage);
     },

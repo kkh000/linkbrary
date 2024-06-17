@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import { getCookie, removeCookie } from '@/utils/apis/cookie';
 
 interface LoginStore {

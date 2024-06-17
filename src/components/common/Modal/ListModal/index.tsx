@@ -1,11 +1,11 @@
 import Image from 'next/image';
 
 import { ICON } from '@/constants/images';
+import useSelect from '@/hooks/useSelect';
+import { FolderListItem } from '@/types/folderType';
+
 import ModalLayout from '..';
 import Button from '../../Button';
-import { FolderListItem } from '@/types/folderType';
-import useSelect from '@/hooks/useSelect';
-import Spinner from '../../Spinner/indext';
 
 interface ModalProps {
   handleModal: () => void;
@@ -17,7 +17,7 @@ interface ModalProps {
 }
 
 const ListModal = ({ handleModal, title, children, content, folderList, onClick }: ModalProps) => {
-  const { selectItem, handleSelectItem, isSelected } = useSelect({});
+  const { selectItem, handleSelectItem, isSelected } = useSelect();
 
   return (
     <ModalLayout handleModal={() => handleModal}>

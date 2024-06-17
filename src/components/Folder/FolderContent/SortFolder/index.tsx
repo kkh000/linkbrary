@@ -1,5 +1,6 @@
-import { FolderListItem } from '@/types/folderType';
 import Link from 'next/link';
+
+import { FolderListItem } from '@/types/folderType';
 
 interface FolderListProps {
   folderList: FolderListItem[] | undefined;

@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { getCookie, setCookie, removeCookie } from './cookie';
 
 const instance = axios.create({

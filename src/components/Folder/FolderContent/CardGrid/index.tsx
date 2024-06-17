@@ -1,5 +1,5 @@
-import { CardItemProps } from '@/types/cardType';
 import Card from '@/components/common/Card';
+import { CardItemProps } from '@/types/cardType';
 import { FolderListItem } from '@/types/folderType';
 
 interface CardGridProps {

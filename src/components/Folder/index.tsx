@@ -1,10 +1,9 @@
-import AddFolderInput from './AddFolderInput';
+import { useQuery } from '@tanstack/react-query';
 
 import useRedirect from '@/hooks/useRedirect';
-
 import { getFolderList } from '@/utils/apis/folderApi';
 
-import { useQuery } from '@tanstack/react-query';
+import AddFolderInput from './AddFolderInput';
 import FolderContent from './FolderContent';
 
 const FolderPage = () => {

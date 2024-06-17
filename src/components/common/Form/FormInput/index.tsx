@@ -1,5 +1,4 @@
 import Image from 'next/image';
-
 import { FieldError, UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 import { ICON } from '@/constants/images';

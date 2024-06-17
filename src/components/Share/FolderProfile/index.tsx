@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
+import { useQuery } from '@tanstack/react-query';
 
 import { getFolderInformation, getUserData } from '@/utils/apis/folderApi';
-import { useQuery } from '@tanstack/react-query';
 
 interface FodlerProfileProps {
   folderId: string;

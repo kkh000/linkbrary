@@ -1,6 +1,6 @@
-import handleStopPropagtion from '@/utils/stopPropagation';
 import usePortal from '@/hooks/usePortal';
 import useLockScroll from '@/hooks/useScroll';
+import handleStopPropagtion from '@/utils/stopPropagation';
 
 interface ModalLayoutProps {
   handleModal: () => void;

@@ -1,14 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
-import useToggled from '@/hooks/useToggled';
-import Popover from '@/components/common/Popover';
-import { removeCookie } from '@/utils/apis/cookie';
-import loginStore from '@/store/loginStore';
-import { useRouter } from 'next/router';
-
-import { toast } from 'react-toastify';
-import { useState } from 'react';
-import Spinner from '@/components/common/Spinner/indext';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
+import Popover from '@/components/common/Popover';
+import Spinner from '@/components/common/Spinner/indext';
+import useToggled from '@/hooks/useToggled';
+import loginStore from '@/store/loginStore';
+import { removeCookie } from '@/utils/apis/cookie';
 import { getUserData } from '@/utils/apis/folderApi';
 
 const UserProfile = () => {
