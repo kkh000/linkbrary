@@ -31,12 +31,12 @@ const gridStyle = {
 
 const LandingMain = () => {
   return (
-    <section className='pc:gap-[7.5rem] tb:gap-[6.25rem] pc:pt-[7.5rem] tb:pt-[5rem] mb:pt-[2.5rem] flex flex-col items-center justify-center gap-[5rem] bg-white pb-[10.625rem]'>
+    <section className='flex flex-col items-center justify-center gap-[5rem] bg-white pb-[10.625rem] mb:pt-[2.5rem] tb:gap-[6.25rem] tb:pt-[5rem] pc:gap-[7.5rem] pc:pt-[7.5rem]'>
       <article className={`${gridStyle.oddIndex.article} ${gridStyle.base.article}`}>
         <h2 className={`${gridStyle.oddIndex.title} ${gridStyle.base.title}`}>
           <span className={`${gradientStyle.roseToBlue}`}>원하는 링크</span>
           를
-          <br className='tb:block hidden' /> 저장하세요
+          <br className='hidden tb:block' /> 저장하세요
         </h2>
         <Image
           className={`${gridStyle.oddIndex.image} ${gridStyle.base.image}`}
@@ -47,14 +47,14 @@ const LandingMain = () => {
         />
         <p className={`${gridStyle.oddIndex.description} text-gray60`}>
           나중에 읽고 싶은 글, 다시 보고 싶은 영상,
-          <br className='tb:block hidden' /> 사고 싶은 옷, <br className='mb:block tb:hidden' /> 기억하고 싶은 모든 것을
-          <br className='tb:block hidden' /> 한 공간에 저장하세요.
+          <br className='hidden tb:block' /> 사고 싶은 옷, <br className='mb:block tb:hidden' /> 기억하고 싶은 모든 것을
+          <br className='hidden tb:block' /> 한 공간에 저장하세요.
         </p>
       </article>
       <article className={`${gridStyle.evenIndex.article} ${gridStyle.base.article}`}>
         <h2 className={`${gridStyle.evenIndex.title} ${gridStyle.base.title}`}>
           링크를 폴더로
-          <br className='tb:block hidden' />
+          <br className='hidden tb:block' />
           <span className={`${gradientStyle.skyToSky}`}>관리</span>
           하세요
         </h2>
@@ -67,13 +67,13 @@ const LandingMain = () => {
         />
         <p className={`${gridStyle.evenIndex.description} text-gray60`}>
           나만의 폴더를 무제한으로 만들고
-          <br className='tb:block hidden' /> 다양하게 활용할 수 <br className='mb:block tb:hidden' /> 있습니다.
+          <br className='hidden tb:block' /> 다양하게 활용할 수 있습니다.
         </p>
       </article>
       <article className={`${gridStyle.oddIndex.article} ${gridStyle.base.article}`}>
         <h2 className={`${gridStyle.oddIndex.title} ${gridStyle.base.title}`}>
           저장한 링크를
-          <br className='tb:block hidden' />
+          <br className='hidden tb:block' />
           <span className={`${gradientStyle.violetToViolet}`}>공유</span>해 보세요
         </h2>
         <Image
@@ -85,15 +85,15 @@ const LandingMain = () => {
         />
         <p className={`${gridStyle.oddIndex.description} text-gray60`}>
           여러 링크를 폴더에 담고 공유할 수 있습니다.
-          <br className='tb:block hidden' /> 가족, <br className='mb:block tb:hidden' />
+          <br className='hidden tb:block' /> 가족, <br className='mb:block tb:hidden' />
           친구, 동료들에게 쉽고 빠르게 링크를
-          <br className='tb:block hidden' /> 공유해 보세요.
+          <br className='hidden tb:block' /> 공유해 보세요.
         </p>
       </article>
       <article className={`${gridStyle.evenIndex.article} ${gridStyle.base.article}`}>
         <h2 className={`${gridStyle.evenIndex.title} ${gridStyle.base.title}`}>
           저장한 링크를
-          <br className='tb:block hidden' />
+          <br className='hidden tb:block' />
           <span className={`${gradientStyle.blueToEmerald}`}>검색</span>해 보세요
         </h2>
         <Image

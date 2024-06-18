@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import AddFolderModal from '@/components/common/Modal/InputModal';
 import { ICON } from '@/constants/images';
+import { ERROR_MESSAGE, MESSAGE } from '@/constants/text';
 import useToggled from '@/hooks/useToggled';
 import { queryClient } from '@/pages/_app';
 import { ErrorResponse } from '@/types/commonType';
@@ -16,12 +17,12 @@ const AddFolderButton = () => {
   const createNewFolder = useMutation({
     mutationFn: (name: string) => createFolder(name),
     onSuccess: () => {
-      toast.success('폴더가 생성되었습니다.');
+      toast.success(MESSAGE.ADD_FOLDER);
       queryClient.invalidateQueries({ queryKey: ['folderList'] });
       handleToggled('addFolderModal');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
+      const errorMessage = error?.response?.data?.message || ERROR_MESSAGE.UNKNOWN_ERROR;
       toast.error(errorMessage);
     },
   });
@@ -32,23 +33,23 @@ const AddFolderButton = () => {
 
   return (
     <div
-      className='flex items-center gap-1  py-2 px-2  rounded-md text-primary hover:border-primary hover:border  hover:bg-primary hover:text-white group'
+      className='group flex items-center gap-1 rounded-md px-2 py-2 text-primary hover:border hover:border-primary hover:bg-primary hover:text-white'
       onClick={() => handleToggled('addFolderModal')}>
-      <span className=' font-medium  hover:text-white'>폴더추가</span>
-      <div className='relative w-5 h-5'>
+      <span className='font-medium hover:text-white'>폴더추가</span>
+      <div className='relative h-5 w-5'>
         <Image
           src={ICON.PLUS}
           alt='plus'
           objectFit='contain'
           layout='fill'
-          className='absolute transition-opacity duration-100 ease-in-out opacity-100 group-hover:opacity-0'
+          className='absolute opacity-100 transition-opacity duration-100 ease-in-out group-hover:opacity-0'
         />
         <Image
           src={ICON.PLUS_WHITE}
           alt='plus white'
           objectFit='contain'
           layout='fill'
-          className='absolute transition-opacity duration-100 ease-in-out opacity-0 group-hover:opacity-100'
+          className='absolute opacity-0 transition-opacity duration-100 ease-in-out group-hover:opacity-100'
         />
       </div>
       <ToastContainer position='top-center' autoClose={3000} />

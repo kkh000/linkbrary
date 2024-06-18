@@ -23,7 +23,7 @@ const SharePage = () => {
   }
 
   return (
-    <main className='flex flex-col justify-center items-center w-full'>
+    <main className='flex w-full flex-col items-center justify-center'>
       <FolderProfile folderId={folderId} />
       <ShareContent folderId={folderId} />
     </main>

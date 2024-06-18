@@ -19,10 +19,10 @@ const InputModal = ({ handleModal, title, children, placeholder, onClick }: Moda
 
   return (
     <ModalLayout handleModal={() => handleModal}>
-      <div className='relative flex flex-col  w-[22.5rem] px-[2.5rem] py-8'>
-        <h1 className='text-center text-2xl font-bold pb-6'>{title}</h1>
+      <div className='relative flex w-[22.5rem] flex-col px-[2.5rem] py-8'>
+        <h1 className='pb-6 text-center text-2xl font-bold'>{title}</h1>
         <input
-          className='py-[1.125rem] px-[0.9375rem] placeholder:text-gray60 border border-gray20 rounded-lg mb-[.9375rem] focus-visible:border-2 focus-visible:border-primary'
+          className='mb-[.9375rem] rounded-lg border border-gray20 px-[0.9375rem] py-[1.125rem] placeholder:text-gray60 focus-visible:border-2 focus-visible:border-primary'
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -30,7 +30,7 @@ const InputModal = ({ handleModal, title, children, placeholder, onClick }: Moda
         <Button type='button' onClick={() => onClick(value)}>
           {children}
         </Button>
-        <button className='absolute top-[16px] right-[16px]' onClick={handleModal}>
+        <button className='absolute right-[16px] top-[16px]' onClick={handleModal}>
           <Image src={ICON.CLOSE} alt='close' width={24} height={24} />
         </button>
       </div>

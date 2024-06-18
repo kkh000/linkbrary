@@ -24,12 +24,12 @@ const CardContent = ({ createdAt, description, pagePath, handleToggled }: CardCo
   return (
     <div className='flex flex-col justify-between gap-[.625rem] px-5 py-[.9375rem] group-hover:bg-gray10'>
       <div className='relative flex justify-between'>
-        <div className='text-gray60 text-sm'>{createDuration}</div>
-        <button className='hover:bg-gray20 hover:opacity-50 p-1 hover:rounded-full ' onClick={handleTogglePopover}>
+        <div className='text-sm text-gray60'>{createDuration}</div>
+        <button className='p-1 hover:rounded-full hover:bg-gray20 hover:opacity-50' onClick={handleTogglePopover}>
           {onlyFolderPage && <Image src={ICON.KEBAB} alt='kebab' width={21} height={17} />}
         </button>
       </div>
-      <p className='truncate h-[3.0625rem]'>{description}</p>
+      <p className='h-[3.0625rem] truncate'>{description}</p>
       <div className='text-sm'>{createDate}</div>
     </div>
   );

@@ -10,15 +10,17 @@ interface ShareContentProps {
 
 const ShareContent = ({ folderId }: ShareContentProps) => {
   const { filteredCardList, setSearchKeyword, searchKeyword } = useFilterCard(folderId);
+  const selectEmptyMessage = searchKeyword === '' ? MESSAGE.EMPTY_CARD : MESSAGE.EMPTY_KEYWORD;
+
   return (
-    <section className='flex flex-col justify-center items-center w-full pt-10 pb-[6.25rem] bg-white '>
+    <section className='flex w-full flex-col items-center justify-center bg-white pb-[6.25rem] pt-10'>
       <div className='w-[66.25rem]'>
         <SearchInput setSearchKeyword={setSearchKeyword} />
       </div>
       {filteredCardList?.length > 0 ? (
         <CardGrid cardList={filteredCardList} />
       ) : (
-        <EmptyContent message={searchKeyword === '' ? MESSAGE.EMPTY_CARD : MESSAGE.EMPTY_KEYWORD} />
+        <EmptyContent message={selectEmptyMessage} />
       )}
     </section>
   );

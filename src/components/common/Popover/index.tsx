@@ -20,11 +20,11 @@ const Popover = ({
   const popoverRef = useClickOutside(closePopover);
 
   return (
-    <div ref={popoverRef} className={`absolute flex flex-col w-[6.25rem] text-sm ${position} z-10`}>
-      <button className='py-2 px3 bg-white' onClick={onClickFirstButton}>
+    <div ref={popoverRef} className={`absolute flex w-[6.25rem] flex-col text-sm ${position} z-10`}>
+      <button className='px3 bg-white py-2' onClick={onClickFirstButton}>
         {firstTitle}
       </button>
-      <button className='py-2 px3 text-primary bg-gray10' onClick={onClickSecondButton}>
+      <button className='px3 bg-gray10 py-2 text-primary' onClick={onClickSecondButton}>
         {secondTitle}
       </button>
     </div>

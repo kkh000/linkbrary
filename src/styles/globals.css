@@ -13,6 +13,7 @@
   #__next {
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
     max-width: 1900px;
     font-family: 'Pretendard';
     font-weight: 400;

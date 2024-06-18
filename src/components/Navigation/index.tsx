@@ -22,10 +22,10 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`${navigationPosition} pc:px-[12.5rem] pc:w-full tb:w-[50rem] tb:mx-auto mb:px-[1.875rem] flex items-center justify-between bg-[#f0f6ff] py-5`}>
+      className={`${navigationPosition} flex items-center justify-between bg-[#f0f6ff] py-5 mb:px-[1.875rem] tb:mx-auto tb:w-[50rem] pc:w-full pc:px-[12.5rem]`}>
       <Link href='/'>
         <Image
-          className='tb:w-[8.3125rem] tb:h-[1.5rem] mb:w-[5.5rem] mb:h-4'
+          className='mb:h-4 mb:w-[5.5rem] tb:h-[1.5rem] tb:w-[8.3125rem]'
           src={LOGO.LINKBRARY_LOGO}
           alt='linkbrary'
           width={133}
@@ -38,7 +38,7 @@ const Navigation = () => {
           <UserProfile />
         ) : (
           <Link href='/signin'>
-            <Button className='tb:text-lg mb:text-sm' type='button'>
+            <Button className='mb:text-sm tb:text-lg' type='button'>
               로그인
             </Button>
           </Link>

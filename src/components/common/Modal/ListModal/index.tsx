@@ -21,13 +21,13 @@ const ListModal = ({ handleModal, title, children, content, folderList, onClick 
 
   return (
     <ModalLayout handleModal={() => handleModal}>
-      <div className='relative flex flex-col  w-[23.75rem] px-[2.5rem] py-8'>
-        <h1 className='text-center text-2xl font-bold pb-6'>{title}</h1>
-        <p className='text-center text-sm text-gray60 pb-6'>{content}</p>
+      <div className='relative flex w-[23.75rem] flex-col px-[2.5rem] py-8'>
+        <h1 className='pb-6 text-center text-2xl font-bold'>{title}</h1>
+        <p className='pb-6 text-center text-sm text-gray60'>{content}</p>
         <ul className='flex flex-col gap-1 pb-6'>
           {folderList?.map(item => (
             <li
-              className={`flex items-center justify-between p-2 rounded-lg hover:bg-gray10 cursor-pointer ${isSelected(item.id) && 'bg-gray10'}`}
+              className={`flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-gray10 ${isSelected(item.id) && 'bg-gray10'}`}
               key={item.id}
               onClick={() => handleSelectItem(item.id)}>
               <div className='flex items-center gap-2'>
@@ -41,7 +41,7 @@ const ListModal = ({ handleModal, title, children, content, folderList, onClick 
         <Button type='button' onClick={() => onClick(selectItem as number)} disabled={selectItem === null}>
           {children}
         </Button>
-        <button className='absolute top-[16px] right-[16px]' onClick={handleModal}>
+        <button className='absolute right-[16px] top-[16px]' onClick={handleModal}>
           <Image src={ICON.CLOSE} alt='close' width={24} height={24} />
         </button>
       </div>

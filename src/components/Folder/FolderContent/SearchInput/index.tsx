@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 
 import { ICON } from '@/constants/images';
+import { PLACEHOLDER } from '@/constants/text';
 import useAutoFocus from '@/hooks/useAutoFocus';
 
 interface SearchInputProps {
@@ -34,15 +35,15 @@ const SearchInput = ({ setSearchKeyword }: SearchInputProps) => {
   const hasKeyword = inputValue.trim() !== '';
 
   return (
-    <div className='flex items-center gap-[.625rem] px-4 py-[.9375rem] mb-10 rounded-xl bg-gray '>
+    <div className='mb-10 flex items-center gap-[.625rem] rounded-xl bg-gray px-4 py-[.9375rem]'>
       <Image src={ICON.SEARCH} alt='search' width={16} height={16} />
       <input
-        className='w-full flex bg-gray placeholder:text-gray100'
-        placeholder='링크를 검색해 보세요'
+        ref={focusRef}
+        className='flex w-full bg-gray placeholder:text-gray100'
+        placeholder={PLACEHOLDER.SEARCH_LINK}
+        onKeyDown={handleResetOnEsc}
         onChange={handleKeyword}
         value={inputValue}
-        onKeyDown={handleResetOnEsc}
-        ref={focusRef}
       />
       {hasKeyword && (
         <button onClick={handleResetKeyword}>
