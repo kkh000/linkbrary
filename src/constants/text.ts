@@ -26,4 +26,7 @@ export const MESSAGE = {
   ADD_FOLDER: '폴더가 생성되었습니다.',
   DELETE_FOLDER: '폴더가 삭제되었습니다.',
   CHNAGE_FOLDER_NAME: '폴더 이름이 변경되었습니다.',
+  VAILD_EMAIL: '사용 가능한 이메일 입니다.',
+  SUCCESS_SIGN_UP: '회원가입에 성공하였습니다. 로그인 페이지로 이동합니다.',
+  FAILED_SIGN_UP: '회원가입에 실패하였습니다. 정보를 다시 확인해주세요',
 };

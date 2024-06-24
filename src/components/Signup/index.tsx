@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
+import { ERROR_MESSAGE, MESSAGE, PLACEHOLDER } from '@/constants/text';
 import useRedirect from '@/hooks/useRedirect';
 import { InputItem } from '@/types/inputType';
 import { userSignup, checkDuplicateEmail } from '@/utils/apis/authApi';
@@ -40,7 +40,7 @@ const SignupPage = () => {
   const checkDuplicate = useMutation({
     mutationFn: (email: string | undefined) => checkDuplicateEmail(email),
     onSuccess: () => {
-      toast.success('사용 가능한 이메일 입니다.');
+      toast.success(MESSAGE.VAILD_EMAIL);
     },
   });
 
@@ -57,13 +57,13 @@ const SignupPage = () => {
   const signupSubmit = useMutation({
     mutationFn: ({ email, password }: InputItem) => userSignup({ email, password }),
     onSuccess: () => {
-      toast.success('회원가입에 성공하였습니다. 로그인 페이지로 이동합니다.');
+      toast.success(MESSAGE.SUCCESS_SIGN_UP);
       setTimeout(() => {
         route.push('/signin');
       }, 3000);
     },
     onError: () => {
-      toast.error('회원가입에 실패하였습니다. 정보를 다시 확인해주세요');
+      toast.error(MESSAGE.FAILED_SIGN_UP);
     },
   });
 
