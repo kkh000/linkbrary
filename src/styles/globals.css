@@ -7,7 +7,14 @@
   body,
   #__next {
     min-height: 100vh;
+  }
+
+  .light {
     background-color: #f0f6ff;
+  }
+
+  .dark {
+    background-color: #111322;
   }
 
   #__next {

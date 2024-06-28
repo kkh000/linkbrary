@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTheme } from 'next-themes';
 
 import { LOGO } from '@/constants/images';
 import useClientSide from '@/hooks/useClientSide';
@@ -13,6 +14,8 @@ import UserProfile from './UserProfile';
 const Navigation = () => {
   const { isLoggedIn } = loginStore();
 
+  const { theme, setTheme } = useTheme();
+
   const route = useRouter();
   const pathname = route.pathname;
 
@@ -22,7 +25,7 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`${navigationPosition} flex items-center justify-between bg-[#f0f6ff] py-5 mb:px-[1.875rem] tb:mx-auto tb:w-[50rem] pc:w-full pc:px-[12.5rem]`}>
+      className={`${navigationPosition} flex items-center justify-between bg-[#f0f6ff] py-5 mb:px-[1.875rem] tb:mx-auto tb:w-[50rem] pc:w-full pc:px-[12.5rem] dark:bg-black`}>
       <Link href='/'>
         <Image
           className='mb:h-4 mb:w-[5.5rem] tb:h-[1.5rem] tb:w-[8.3125rem]'
@@ -33,6 +36,9 @@ const Navigation = () => {
           priority
         />
       </Link>
+      <button type='button' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className='dark:text-white'>
+        {theme === 'dark' ? '🎇' : '🌛'}
+      </button>
       {isClient &&
         (isLoggedIn ? (
           <UserProfile />

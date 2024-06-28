@@ -12,7 +12,7 @@ const gradientStyle = {
 const gridStyle = {
   base: {
     article: 'tb:grid pc:gap-x-[9.8125rem] tb:gap-x-[3.1875rem] tb:gap-y-[.625rem] tb:px-auto flex flex-col gap-5 px-8',
-    title: 'tb:text-5xl font-bold text-2xl',
+    title: 'tb:text-5xl font-bold text-2xl dark:text-white',
     image: 'pc:w-[34.375rem] pc:h-[28.125rem] tb:w-[24.0625rem] tb:h-[19.6875rem]',
   },
   oddIndex: {
@@ -24,16 +24,16 @@ const gridStyle = {
   evenIndex: {
     article: 'tb:grid-cols-[1fr, 291px] tb:grid-rows-2',
     title: 'tb:col-span-1 tb:row-span-1 tb:col-start-2 tb:self-end tb:text-right',
-    description: 'tb:col-span-1 tb:row-span-1 tb:col-start-2 tb:row-start-2 tb:text-right',
+    description: 'tb:col-span-1 tb:row-span-1 tb:col-start-2 tb:row-start-2 tb:text-right ',
     image: 'tb:col-span-1 tb:row-span-2 tb:row-start-1',
   },
 };
 
 const LandingMain = () => {
   return (
-    <section className='flex flex-col items-center justify-center gap-[5rem] bg-white pb-[10.625rem] mb:pt-[2.5rem] tb:gap-[6.25rem] tb:pt-[5rem] pc:gap-[7.5rem] pc:pt-[7.5rem]'>
+    <section className='flex flex-col items-center justify-center gap-[5rem] bg-white pb-[10.625rem] mb:pt-[2.5rem] tb:gap-[6.25rem] tb:pt-[5rem] pc:gap-[7.5rem] pc:pt-[7.5rem] dark:bg-black'>
       <article className={`${gridStyle.oddIndex.article} ${gridStyle.base.article}`}>
-        <h2 className={`${gridStyle.oddIndex.title} ${gridStyle.base.title}`}>
+        <h2 className={`${gridStyle.oddIndex.title} ${gridStyle.base.title} `}>
           <span className={`${gradientStyle.roseToBlue}`}>원하는 링크</span>
           를
           <br className='hidden tb:block' /> 저장하세요
@@ -52,7 +52,7 @@ const LandingMain = () => {
         </p>
       </article>
       <article className={`${gridStyle.evenIndex.article} ${gridStyle.base.article}`}>
-        <h2 className={`${gridStyle.evenIndex.title} ${gridStyle.base.title}`}>
+        <h2 className={`${gridStyle.evenIndex.title} ${gridStyle.base.title} `}>
           링크를 폴더로
           <br className='hidden tb:block' />
           <span className={`${gradientStyle.skyToSky}`}>관리</span>

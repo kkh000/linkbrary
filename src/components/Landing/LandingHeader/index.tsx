@@ -9,7 +9,7 @@ import LandingTitle from './LandingTitle';
 
 const LandingHeader = () => {
   return (
-    <section className='flex flex-col items-center justify-center pt-7 text-center mb:gap-6 tb:gap-10 tb:pt-[2.5rem] pc:pt-[4.375rem]'>
+    <section className='flex flex-col items-center justify-center pt-7 text-center mb:gap-6 tb:gap-10 tb:pt-[2.5rem] pc:pt-[4.375rem] dark:bg-black'>
       <LandingTitle />
       <Link className='mb:w-[12.5rem] tb:w-[21.875rem]' href='/signup'>
         <Button size='mb:py-[.625rem] mb:px-4 tb:py-4 tb:px-5 w-full' type='button'>
