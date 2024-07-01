@@ -31,7 +31,7 @@ const gridStyle = {
 
 const LandingMain = () => {
   return (
-    <section className='flex flex-col items-center justify-center gap-[5rem] bg-white pb-[10.625rem] mb:pt-[2.5rem] tb:gap-[6.25rem] tb:pt-[5rem] pc:gap-[7.5rem] pc:pt-[7.5rem] dark:bg-black'>
+    <section className='flex flex-col items-center justify-center gap-[5rem] bg-white pb-[10.625rem] dark:bg-black mb:pt-[2.5rem] tb:gap-[6.25rem] tb:pt-[5rem] pc:gap-[7.5rem] pc:pt-[7.5rem]'>
       <article className={`${gridStyle.oddIndex.article} ${gridStyle.base.article}`}>
         <h2 className={`${gridStyle.oddIndex.title} ${gridStyle.base.title} `}>
           <span className={`${gradientStyle.roseToBlue}`}>원하는 링크</span>

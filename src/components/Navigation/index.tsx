@@ -25,7 +25,7 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`${navigationPosition} flex items-center justify-between bg-[#f0f6ff] py-5 mb:px-[1.875rem] tb:mx-auto tb:w-[50rem] pc:w-full pc:px-[12.5rem] dark:bg-black`}>
+      className={`${navigationPosition} flex items-center justify-between bg-[#f0f6ff] py-5 dark:bg-black mb:px-[1.875rem] tb:mx-auto tb:w-[50rem] pc:w-full pc:px-[12.5rem]`}>
       <Link href='/'>
         <Image
           className='mb:h-4 mb:w-[5.5rem] tb:h-[1.5rem] tb:w-[8.3125rem]'

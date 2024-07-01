@@ -2,7 +2,7 @@ const textGradient = 'bg-gradient-to-r from-blue-600 to-pink-300 bg-clip-text te
 
 const LandingTitle = () => {
   return (
-    <h1 className='text-[2rem] font-bold tb:text-[4rem] dark:text-white'>
+    <h1 className='text-[2rem] font-bold dark:text-white tb:text-[4rem]'>
       <span className={textGradient}>세상의 모든 정보</span>
       를<br /> 쉽게 저장하고 <br className='pc:hidden' />
       관리해 보세요
