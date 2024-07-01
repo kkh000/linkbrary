@@ -18,9 +18,9 @@ const FolderProfile = ({ folderId }: FodlerProfileProps) => {
   const folderName = folderId === 'all' ? '전체' : folderInformation?.[0]?.name || '';
 
   return (
-    <header className='flex flex-col justify-center items-center pt-5 pb-[3.75rem]'>
+    <header className='flex flex-col items-center justify-center pb-[3.75rem] pt-5'>
       <img src={userData[0].image_source} alt='image' width={60} height={60} />
-      <div className='pt-3 pb-5'>{userData[0].email}</div>
+      <div className='pb-5 pt-3'>{userData[0].email}</div>
       <div className='text-4xl font-semibold'>{folderName}</div>
     </header>
   );

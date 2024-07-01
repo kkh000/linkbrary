@@ -15,7 +15,7 @@ const SortFolder = ({ folderList, folderId }: FolderListProps) => {
       {myFolderList.map(({ id, name }) => (
         <Link key={id} href={`/folder/${id}`}>
           <button
-            className={`py-2 px-3 rounded-md border border-primary ${folderId == id && 'bg-primary text-white'}  `}>
+            className={`rounded-md border border-primary px-3 py-2 ${folderId == id && 'bg-primary text-white'} `}>
             {name}
           </button>
         </Link>

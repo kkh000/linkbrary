@@ -9,6 +9,7 @@ import DeleteLinkModal from '@/components/common/Modal/DeleteModal';
 import ListModal from '@/components/common/Modal/ListModal';
 import Popover from '@/components/common/Popover';
 import { ICON, IMAGE } from '@/constants/images';
+import { ERROR_MESSAGE, MESSAGE } from '@/constants/text';
 import useToggled from '@/hooks/useToggled';
 import { queryClient } from '@/pages/_app';
 import { CardItemProps } from '@/types/cardType';
@@ -38,10 +39,10 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['links'] });
       handleToggled('deleteLinkModal');
-      toast.success('링크가 삭제 되었습니다.');
+      toast.success(MESSAGE.DELETE_LINK);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
+      const errorMessage = error?.response?.data?.message || ERROR_MESSAGE.UNKNOWN_ERROR;
       toast.error(errorMessage);
     },
   });
@@ -49,13 +50,13 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
   const createCardLink = useMutation({
     mutationFn: ({ url, folderId }: { url: string; folderId: string | number }) => createLink({ url, folderId }),
     onSuccess: () => {
-      toast.success('링크가 추가되었습니다.');
+      toast.success(MESSAGE.ADD_LINK);
       queryClient.invalidateQueries({ queryKey: ['links'] });
       handleToggled('listModal');
       if (folderId) router.push(folderId.toString());
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
+      const errorMessage = error?.response?.data?.message || ERROR_MESSAGE.UNKNOWN_ERROR;
       toast.error(errorMessage);
     },
   });
@@ -76,11 +77,11 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
   const cardImage = image_source === null ? IMAGE.NO_IMAGE : image_source;
 
   return (
-    <div key={id} className='relative group'>
-      <Link className='flex flex-col w-[21.25rem] h-[20.875rem] shadow-md rounded-2xl' href={url} target='_blank'>
-        <div className='relative overflow-hidden rounded-t-2xl w-[21.25rem] h-[17.5rem] z-1'>
+    <div key={id} className='group relative'>
+      <Link className='flex h-[20.875rem] w-[21.25rem] flex-col rounded-2xl shadow-md' href={url} target='_blank'>
+        <div className='z-1 relative h-[17.5rem] w-[21.25rem] overflow-hidden rounded-t-2xl'>
           <img
-            className='object-cover w-full h-full transition-transform duration-300 ease-in-out transform group-hover:scale-130'
+            className='h-full w-full transform object-cover transition-transform duration-300 ease-in-out group-hover:scale-130'
             src={cardImage}
             onError={handleErrorImage}
             alt='none'
@@ -94,7 +95,7 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
         />
       </Link>
       {onlyFolderPage && (
-        <button className='absolute top-[15px] right-[15px]'>
+        <button className='absolute right-[15px] top-[15px]'>
           <Image src={ICON.STAR} alt='star' width={34} height={34} />
         </button>
       )}

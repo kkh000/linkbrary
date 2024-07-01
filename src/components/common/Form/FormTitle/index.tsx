@@ -15,10 +15,10 @@ const FormTitle = ({ question, linkMessage, path }: FormTitleProps) => {
       <Link href='/'>
         <Image src={LOGO.LINKBRARY_LOGO} alt='logo' width={210} height={38} priority />
       </Link>
-      <div className='flex  justify-center items-center gap-2'>
+      <div className='flex items-center justify-center gap-2'>
         <p>{question}</p>
         <Link href={path ?? ''}>
-          <div className='font-bold text-primary border-b border-b-primary'>{linkMessage}</div>
+          <div className='border-b border-b-primary font-bold text-primary'>{linkMessage}</div>
         </Link>
       </div>
     </div>

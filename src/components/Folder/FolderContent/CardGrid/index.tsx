@@ -9,7 +9,7 @@ interface CardGridProps {
 
 const CardGrid = ({ cardList, folderList }: CardGridProps) => {
   return (
-    <div className='grid grid-cols-3 pt-6 gap-x-5 gap-y-6'>
+    <div className='grid grid-cols-3 gap-x-5 gap-y-6 pt-6'>
       {cardList?.map((card: CardItemProps) => (
         <Card
           key={card.id}

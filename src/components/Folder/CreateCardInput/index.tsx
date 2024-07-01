@@ -7,6 +7,7 @@ import Button from '@/components/common/Button';
 import ListModal from '@/components/common/Modal/ListModal';
 import Spinner from '@/components/common/Spinner/indext';
 import { ICON } from '@/constants/images';
+import { ERROR_MESSAGE, MESSAGE, PLACEHOLDER } from '@/constants/text';
 import useInput from '@/hooks/useInput';
 import useToggled from '@/hooks/useToggled';
 import { queryClient } from '@/pages/_app';
@@ -14,18 +15,18 @@ import { ErrorResponse } from '@/types/commonType';
 import { FolderListItem } from '@/types/folderType';
 import { createLink } from '@/utils/apis/linkApis';
 
-interface AddFolderInputProps {
+interface CreatCardInputProps {
   folderList: FolderListItem[] | undefined;
 }
 
-const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
+const CreatCardInput = ({ folderList }: CreatCardInputProps) => {
   const [isToggled, handleToggled] = useToggled({ listModal: false });
   const { value, onChange, reset } = useInput('');
 
   const createCardLink = useMutation({
     mutationFn: ({ url, folderId }: { url: string; folderId: string | number }) => createLink({ url, folderId }),
     onSuccess: () => {
-      toast.success('링크가 추가되었습니다.');
+      toast.success(MESSAGE.ADD_LINK);
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: ['links'] });
       }, 1000);
@@ -34,7 +35,7 @@ const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
       handleToggled('listModal');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      const errorMessage = error?.response?.data?.message || '에러가 발생했습니다.';
+      const errorMessage = error?.response?.data?.message || ERROR_MESSAGE.UNKNOWN_ERROR;
       toast.error(errorMessage);
     },
   });
@@ -48,10 +49,10 @@ const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
   };
 
   return (
-    <header className='flex justify-center w-full pt-[3.75rem] pb-[5.625rem]'>
-      <div className='flex gap-3 w-[50rem] py-4 px-5 bg-white rounded-2xl border-primary border focus-within:border-2'>
+    <header className='flex w-full justify-center pb-[5.625rem] pt-[3.75rem]'>
+      <div className='flex w-[50rem] gap-3 rounded-2xl border border-primary bg-white px-5 py-4 focus-within:border-2'>
         <Image src={ICON.LINK} alt='link' width={20} height={20} />
-        <input className='flex w-full' value={value} onChange={onChange} placeholder='링크를 추가해 보세요' />
+        <input className='flex w-full' value={value} onChange={onChange} placeholder={PLACEHOLDER.ADD_LINK} />
         <Button type='button' size='w-[8.125rem] py-[.625rem] px-4' onClick={() => handleToggled('listModal')}>
           추가하기
         </Button>
@@ -70,4 +71,4 @@ const AddFolderInput = ({ folderList }: AddFolderInputProps) => {
   );
 };
 
-export default AddFolderInput;
+export default CreatCardInput;

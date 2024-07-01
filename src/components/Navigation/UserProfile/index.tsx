@@ -17,20 +17,18 @@ const UserProfile = () => {
 
   const route = useRouter();
 
-  const notify = () => toast.success('로그아웃되었습니다!');
-
   const { data: userData } = useQuery({ queryKey: ['user'], queryFn: getUserData });
 
   const handleLogout = () => {
     setLoading(true);
-    notify();
+    toast.success('로그아웃되었습니다!');
 
     setTimeout(() => {
       setIsLoggedIn(false);
       removeCookie('accessToken');
       route.push('/');
       setLoading(false);
-    }, 3000);
+    }, 1000);
   };
 
   return (
@@ -39,7 +37,7 @@ const UserProfile = () => {
         <Spinner />
       ) : (
         <>
-          <img className='w-7 h-7 rounded-full' src={userData?.[0]?.image_source} alt='profile' />
+          <img className='h-7 w-7 rounded-full' src={userData?.[0]?.image_source} alt='profile' />
           <div className='text-sm'>{userData?.[0]?.name}</div>
         </>
       )}

@@ -40,12 +40,12 @@ const FormInput = ({ id, title, placeholder, type, error, register, clearError, 
   const visiblePassword = isToggled.isShowPassword ? 'text' : type;
 
   return (
-    <div className=' flex flex-col w-full gap-3'>
+    <div className='flex w-full flex-col gap-3'>
       <label className='text-sm' htmlFor={id}>
         {title}
       </label>
       <div
-        className={`flex justify-between gap-1 border py-[1.125rem] px-[.9375rem] rounded-lg  bg-white overflow-hidden focus-within:border-primary ${ErrorStyle}`}>
+        className={`flex justify-between gap-1 overflow-hidden rounded-lg border bg-white px-[.9375rem] py-[1.125rem] focus-within:border-primary ${ErrorStyle}`}>
         <input
           id={id}
           className='w-full'

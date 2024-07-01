@@ -5,7 +5,7 @@ import { LOGO } from '@/constants/images';
 
 const SocialLink = () => {
   return (
-    <div className='flex gap-3'>
+    <div className='col-start-2 flex justify-center gap-3'>
       {SOCIAL_ICON_LIST &&
         SOCIAL_ICON_LIST.map((icon, index) => (
           <Link href={icon.url} key={index}>

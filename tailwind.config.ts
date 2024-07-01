@@ -6,7 +6,13 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
+    screens: {
+      mb: '375px',
+      tb: '767px',
+      pc: '1200px',
+    },
     extend: {
       scale: {
         '130': '1.3',

@@ -8,7 +8,7 @@ interface SocialLoginProps {
 
 const SocialLogin = ({ title }: SocialLoginProps) => {
   return (
-    <div className='w-[25rem] flex justify-between items-center py-3 px-6 rounded-lg bg-gray10'>
+    <div className='flex w-[25rem] items-center justify-between rounded-lg bg-gray10 px-6 py-3'>
       <div className='text-sm'>{title}</div>
       <div className='flex gap-4'>
         <button type='button'>

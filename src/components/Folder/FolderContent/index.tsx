@@ -33,16 +33,17 @@ const FolderContent = ({ folderList }: FolderCotentProps) => {
 
   const folderName = folderId === 'all' ? '전체' : folderInformation?.[0]?.name || '';
   const hasEditToolbar = folderId === 'all';
+  const selectEmptyMessage = searchKeyword === '' ? MESSAGE.EMPTY_CARD : MESSAGE.EMPTY_KEYWORD;
 
   return (
-    <section className='flex flex-col justify-center items-center w-full pt-10 pb-[6.25rem] bg-white '>
+    <section className='flex w-full flex-col items-center justify-center bg-white pb-[6.25rem] pt-10'>
       <div className='w-[66.25rem]'>
         <SearchInput setSearchKeyword={setSearchKeyword} />
-        <div className='flex justify-between items-center mb-6'>
+        <div className='mb-6 flex items-center justify-between'>
           <SortFolder folderList={folderList} folderId={folderId} />
           <AddFolderButton />
         </div>
-        <div className='flex justify-between items-center'>
+        <div className='flex items-center justify-between'>
           <h2 className='text-2xl font-bold'>{folderName}</h2>
           {!hasEditToolbar && <EditToolbar folderName={folderName} folderId={folderId} />}
         </div>
@@ -52,7 +53,7 @@ const FolderContent = ({ folderList }: FolderCotentProps) => {
       ) : filteredCardList?.length > 0 ? (
         <CardGrid cardList={filteredCardList} folderList={folderList} />
       ) : (
-        <EmptyContent message={searchKeyword === '' ? MESSAGE.EMPTY_CARD : MESSAGE.EMPTY_KEYWORD} />
+        <EmptyContent message={selectEmptyMessage} />
       )}
     </section>
   );

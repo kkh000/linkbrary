@@ -32,4 +32,5 @@ export const ICON = {
   STAR: '/icons/star.svg',
   STAR_BLUE: '/icons/satr_blue.svg',
   CHECK: '/icons/check.svg',
+  ARROW_UP: '/icons/arrow_up.svg',
 };
