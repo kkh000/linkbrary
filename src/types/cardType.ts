@@ -1,6 +1,6 @@
 export interface CardItemProps {
   id: number;
-  favorite?: boolean;
+  favorite: boolean;
   created_at: string;
   url: string;
   title: string;

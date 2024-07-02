@@ -15,11 +15,7 @@ const ToggleButton = () => {
   const isDarkMode = theme === 'dark';
   return (
     <button type='button' onClick={() => setTheme(isDarkMode ? 'light' : 'dark')} className='dark:text-white'>
-      {isDarkMode ? (
-        <Image src={ICON.LIGHT} alt='light' width={20} height={20} />
-      ) : (
-        <Image src={ICON.DARK} alt='light' width={20} height={20} />
-      )}
+      <Image src={isDarkMode ? ICON.LIGHT : ICON.DARK} alt='light' width={20} height={20} />
     </button>
   );
 };

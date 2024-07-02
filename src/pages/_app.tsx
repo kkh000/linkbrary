@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <CookiesProvider>
         <ThemeProvider attribute='class'>
-          <ToastContainer position='bottom-right' autoClose={3000} />
+          <ToastContainer position='bottom-right' autoClose={300} hideProgressBar={true} />
           <Component {...pageProps} />
         </ThemeProvider>
       </CookiesProvider>

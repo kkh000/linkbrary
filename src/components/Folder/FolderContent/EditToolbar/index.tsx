@@ -61,7 +61,7 @@ const EditToolbar = ({ folderName, folderId }: EditToolbarProps) => {
 
   return (
     <div className='flex gap-3'>
-      <div className='flex cursor-pointer gap-1' onClick={() => route.push(`/share/${folderId}`)}>
+      <div className='flex cursor-pointer gap-1'>
         <Image src={ICON.SHARE} alt='share' width={18} height={18} />
         <div className='text-sm font-semibold text-gray60 hover:text-black'>공유</div>
       </div>

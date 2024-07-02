@@ -15,7 +15,7 @@ import { queryClient } from '@/pages/_app';
 import { CardItemProps } from '@/types/cardType';
 import { ErrorResponse } from '@/types/commonType';
 import { FolderListItem } from '@/types/folderType';
-import { createLink, deleteLink } from '@/utils/apis/linkApis';
+import { changeLink, createLink, deleteLink } from '@/utils/apis/linkApis';
 
 import CardContent from './CardContent';
 
@@ -23,15 +23,15 @@ interface CardProps extends CardItemProps {
   folderList?: FolderListItem[];
 }
 
-const Card = ({ id, created_at, description, url, image_source, folderList }: CardProps) => {
+const Card = ({ id, created_at, description, url, image_source, folderList, favorite }: CardProps) => {
   const [isToggled, handleToggled] = useToggled({
     popvoer: false,
     deleteLinkModal: false,
     listModal: false,
+    favorite: false,
   });
 
   const router = useRouter();
-  const pagePath = router.asPath.split('/')[1];
   const folderId = router.query.id as string | undefined;
 
   const deleteCardLink = useMutation({
@@ -61,6 +61,31 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
     },
   });
 
+  const changeCardFavorite = useMutation({
+    mutationFn: ({ favorite, cardId }: { favorite: boolean; cardId: string | number }) => {
+      const newFavorite = !favorite;
+      return changeLink({ favorite: newFavorite, cardId });
+    },
+    onSuccess: () => {
+      if (!favorite) {
+        toast.success('즐겨찾기에 등록되었습니다.');
+      } else {
+        toast.error('즐겨찾기에서 제거되었습니다.');
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['links'] });
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const errorMessage = error?.response?.data?.message || ERROR_MESSAGE.UNKNOWN_ERROR;
+      toast.error(errorMessage);
+    },
+  });
+
+  const handleChangeFavortie = async () => {
+    changeCardFavorite.mutate({ cardId: id, favorite: favorite });
+    handleToggled('favorite');
+  };
+
   const handleDeleteLink = async () => {
     deleteCardLink.mutate(id);
   };
@@ -73,7 +98,6 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
     (event.target as HTMLImageElement).src = IMAGE.NO_IMAGE;
   };
 
-  const onlyFolderPage = pagePath !== 'share';
   const cardImage = image_source === null ? IMAGE.NO_IMAGE : image_source;
 
   return (
@@ -87,18 +111,12 @@ const Card = ({ id, created_at, description, url, image_source, folderList }: Ca
             alt='none'
           />
         </div>
-        <CardContent
-          createdAt={created_at}
-          description={description}
-          handleToggled={() => handleToggled('popover')}
-          pagePath={pagePath}
-        />
+        <CardContent createdAt={created_at} description={description} handleToggled={() => handleToggled('popover')} />
       </Link>
-      {onlyFolderPage && (
-        <button className='absolute right-[15px] top-[15px]'>
-          <Image src={ICON.STAR} alt='star' width={34} height={34} />
-        </button>
-      )}
+
+      <button className='absolute right-[15px] top-[15px]' onClick={handleChangeFavortie}>
+        <Image src={favorite ? ICON.STAR_BLUE : ICON.STAR} alt='star' width={34} height={34} />
+      </button>
 
       {isToggled.popover && (
         <Popover
