@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTheme } from 'next-themes';
 
 import { LOGO } from '@/constants/images';
 import useClientSide from '@/hooks/useClientSide';
@@ -9,12 +8,11 @@ import loginStore from '@/store/loginStore';
 
 import Button from '../common/Button';
 
+import ToggleButton from './ToggleButton';
 import UserProfile from './UserProfile';
 
 const Navigation = () => {
   const { isLoggedIn } = loginStore();
-
-  const { theme, setTheme } = useTheme();
 
   const route = useRouter();
   const pathname = route.pathname;
@@ -36,19 +34,19 @@ const Navigation = () => {
           priority
         />
       </Link>
-      <button type='button' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className='dark:text-white'>
-        {theme === 'dark' ? '🎇' : '🌛'}
-      </button>
-      {isClient &&
-        (isLoggedIn ? (
-          <UserProfile />
-        ) : (
-          <Link href='/signin'>
-            <Button className='mb:text-sm tb:text-lg' type='button'>
-              로그인
-            </Button>
-          </Link>
-        ))}
+      <div className='flex gap-10'>
+        <ToggleButton />
+        {isClient &&
+          (isLoggedIn ? (
+            <UserProfile />
+          ) : (
+            <Link href='/signin'>
+              <Button className='mb:text-sm tb:text-lg' type='button'>
+                로그인
+              </Button>
+            </Link>
+          ))}
+      </div>
     </nav>
   );
 };
