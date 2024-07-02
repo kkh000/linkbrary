@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Card from '@/components/common/Card';
 import useToggled from '@/hooks/useToggled';
 import { CardItemProps } from '@/types/cardType';
@@ -10,11 +12,30 @@ interface CardGridProps {
 
 const CardGrid = ({ cardList, folderList }: CardGridProps) => {
   const [isToggled, handleToggled] = useToggled({ isShowAllCards: false });
+  const [sortBy, setSortBy] = useState<'latest' | 'favorite' | 'random'>('latest');
 
-  const visibleCards = isToggled.isShowAllCards ? cardList : cardList.slice(0, 9);
+  const sortCards = (cards: CardItemProps[]) => {
+    switch (sortBy) {
+      case 'favorite':
+        return cards.sort((a, b) => (a.favorite === b.favorite ? 0 : a.favorite ? -1 : 1));
+      case 'random':
+        return cards.sort(() => Math.random() - 0.5);
+      case 'latest':
+      default:
+        return cards.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    }
+  };
+
+  const sortedCards = sortCards(cardList);
+  const visibleCards = isToggled.isShowAllCards ? sortedCards : sortedCards.slice(0, 9);
 
   return (
-    <div className='flex flex-col items-center gap-10'>
+    <div className='flex flex-col'>
+      <div className='flex justify-start gap-10 pt-5'>
+        <button onClick={() => setSortBy('latest')}>최신순</button>
+        <button onClick={() => setSortBy('favorite')}>좋아요</button>
+        <button onClick={() => setSortBy('random')}>랜덤</button>
+      </div>
       <div className='grid grid-cols-3 gap-x-5 gap-y-6 pt-6'>
         {visibleCards.map((card: CardItemProps) => (
           <Card
@@ -30,9 +51,9 @@ const CardGrid = ({ cardList, folderList }: CardGridProps) => {
           />
         ))}
       </div>
-      {!isToggled.isShowAllCards && cardList.length > 9 && (
+      {!isToggled.isShowAllCards && sortedCards.length > 9 && (
         <button
-          className='w-[200px] rounded-lg bg-primary py-5 text-lg font-bold text-white'
+          className='mx-auto mt-10 w-[200px] rounded-lg bg-primary py-5 text-lg font-bold text-white'
           onClick={() => handleToggled('isShowAllCards')}>
           더보기
         </button>
