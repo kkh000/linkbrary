@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 const useClientSide = () => {
-  const [clientSide, setClientSide] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setClientSide(true);
+    setIsClient(true);
   }, []);
 
-  return clientSide;
+  return isClient;
 };
 
 export default useClientSide;

@@ -30,7 +30,9 @@ export const ICON = {
   DELETE: '/icons/delete.svg',
   KEBAB: '/icons/kebab.svg',
   STAR: '/icons/star.svg',
-  STAR_BLUE: '/icons/satr_blue.svg',
+  STAR_BLUE: '/icons/star_blue.svg',
   CHECK: '/icons/check.svg',
   ARROW_UP: '/icons/arrow_up.svg',
+  LIGHT: '/icons/light.svg',
+  DARK: '/icons/moon.svg',
 };

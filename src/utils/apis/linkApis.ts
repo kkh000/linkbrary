@@ -12,6 +12,11 @@ export const createLink = async ({ url, folderId }: { url: string; folderId: str
   return response.data;
 };
 
+export const changeLink = async ({ cardId, favorite }: { favorite: boolean; cardId: string | number }) => {
+  const response = await instance.put(`/links/${cardId}`, { favorite });
+  return response.data;
+};
+
 export const deleteLink = async (cardId: number) => {
   const response = await instance.delete(`/links/${cardId}`);
   return response.data;
