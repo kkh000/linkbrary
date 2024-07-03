@@ -5,6 +5,9 @@ import useToggled from '@/hooks/useToggled';
 import { CardItemProps } from '@/types/cardType';
 import { FolderListItem } from '@/types/folderType';
 
+import ShowAllButton from './ShowAllButton/indext';
+import SortButton from './SortButton';
+
 interface CardGridProps {
   folderList?: FolderListItem[];
   cardList: CardItemProps[];
@@ -31,11 +34,7 @@ const CardGrid = ({ cardList, folderList }: CardGridProps) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex justify-start gap-10 pt-5'>
-        <button onClick={() => setSortBy('latest')}>최신순</button>
-        <button onClick={() => setSortBy('favorite')}>좋아요</button>
-        <button onClick={() => setSortBy('random')}>랜덤</button>
-      </div>
+      <SortButton setSortBy={setSortBy} />
       <div className='grid grid-cols-3 gap-x-5 gap-y-6 pt-6'>
         {visibleCards.map((card: CardItemProps) => (
           <Card
@@ -52,11 +51,7 @@ const CardGrid = ({ cardList, folderList }: CardGridProps) => {
         ))}
       </div>
       {!isToggled.isShowAllCards && sortedCards.length > 9 && (
-        <button
-          className='mx-auto mt-10 w-[200px] rounded-lg bg-primary py-5 text-lg font-bold text-white'
-          onClick={() => handleToggled('isShowAllCards')}>
-          더보기
-        </button>
+        <ShowAllButton onClick={() => handleToggled('isShowAllCards')} />
       )}
     </div>
   );
