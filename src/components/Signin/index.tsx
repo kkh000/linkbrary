@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { FieldError, useForm } from 'react-hook-form';
 
 import { ERROR_MESSAGE, PLACEHOLDER } from '@/constants/text';
-import useRedirect from '@/hooks/useRedirect';
 import loginStore from '@/store/loginStore';
 import { ErrorResponse } from '@/types/commonType';
 import { InputItem } from '@/types/inputType';
@@ -28,8 +27,6 @@ const SigninPage = () => {
     setFocus,
     setError,
   } = useForm<InputItem>({ mode: 'onBlur', reValidateMode: 'onBlur' });
-
-  useRedirect('/folder/all', false);
 
   const route = useRouter();
   const { setIsLoggedIn } = loginStore();
