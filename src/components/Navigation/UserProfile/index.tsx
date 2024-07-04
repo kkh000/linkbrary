@@ -7,7 +7,7 @@ import Popover from '@/components/common/Popover';
 import Spinner from '@/components/common/Spinner/indext';
 import useToggled from '@/hooks/useToggled';
 import loginStore from '@/store/loginStore';
-import { removeCookie } from '@/utils/apis/cookie';
+import { getCookie, removeCookie } from '@/utils/apis/cookie';
 import { getUserData } from '@/utils/apis/folderApi';
 
 const UserProfile = () => {
@@ -30,6 +30,10 @@ const UserProfile = () => {
       setLoading(false);
     }, 1000);
   };
+
+  const token = getCookie('accessToken');
+
+  console.log(token);
 
   return (
     <button className='relative flex items-center gap-[.375rem]' onClick={() => handleToggled('popover')}>
