@@ -5,6 +5,7 @@ import { FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { ERROR_MESSAGE, MESSAGE, PLACEHOLDER } from '@/constants/text';
+import useRedirect from '@/hooks/useRedirect';
 import { InputItem } from '@/types/inputType';
 import { userSignup, checkDuplicateEmail } from '@/utils/apis/authApi';
 import { regexr } from '@/utils/regrex';
@@ -29,6 +30,8 @@ const SignupPage = () => {
   const route = useRouter();
 
   const isValid = Object.keys(errors).length !== 0;
+
+  useRedirect('/folder/all', false);
 
   useEffect(() => {
     setFocus('email');
